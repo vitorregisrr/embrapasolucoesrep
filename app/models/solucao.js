@@ -18,6 +18,11 @@ const Solucao = new Schema({
         ref: 'Empresa'
     },
 
+    date: {
+        type: Date,
+        default: Date.now()
+    },
+
     encarregado: {
         type: String,
         required: false

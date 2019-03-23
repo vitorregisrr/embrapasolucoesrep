@@ -23,6 +23,11 @@ const Requisicao = new Schema({
         required: true
     },
 
+    date: {
+        type: Date,
+        default: Date.now()
+    },
+
     email: {
         type: String,
         required: true

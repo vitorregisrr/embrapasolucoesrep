@@ -18,6 +18,9 @@ router.get('/', publicCtrl.index.getIndex);
 //Solução
 router.get('/solucao/:solucaoCod', publicCtrl.solucao.getSolucao);
 
+//Submeter
+router.get('/submeter', publicCtrl.index.getSubmeter);
+
 //Solicitação
 router.get('/solucao/solicitar', publicCtrl.solucao.getSolicitacao);
 router.post('/solucao/solicitar', validators.solucao.solicitacao, publicCtrl.solucao.postSolicitacao);

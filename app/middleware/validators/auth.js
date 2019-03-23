@@ -67,7 +67,7 @@ exports.login = [
         if (!errors.isEmpty()) {
             return res
                 .status(422)
-                .render('admin/auth/login', {
+                .render('admin/login', {
                     path: '/login',
                     pageTitle: 'Sign Up',
                     errorMessage: errors.array(),

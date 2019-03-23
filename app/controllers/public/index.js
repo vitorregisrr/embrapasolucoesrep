@@ -6,3 +6,12 @@ exports.getIndex = (req, res, next) => {
         errorMessage: []
     })
 }
+
+exports.getSubmeter = (req, res, next) => {
+    res.render('public/submeter', {
+        pageTitle: '',
+        path: "/",
+        robotsFollow: false,
+        errorMessage: []
+    })
+}

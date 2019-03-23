@@ -1,16 +1,16 @@
 exports.getAvaliacoes = (req, res, next) => {
-    res.render('admin/avaliacao/solucoes', {
-        pageTitle: 'Soluções',
-        path: "admin/depoimentos",
+    res.render('admin/avaliacao/avaliacoes', {
+        pageTitle: 'Avaliações',
+        path: "admin/avaliacao",
         robotsFollow: false,
         errorMessage: []
     });
 }
 
 exports.getSolicitacoes = (req, res, next) => {
-    res.render('admin/avaliacao/solucoes', {
-        pageTitle: 'Soluções',
-        path: "admin/depoimentos",
+    res.render('admin/avaliacao/solicitacoes', {
+        pageTitle: 'Solicitações de Avaliação',
+        path: "admin/avalaicao/solicitacoes",
         robotsFollow: false,
         errorMessage: []
     });

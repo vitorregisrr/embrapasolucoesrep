@@ -13,9 +13,9 @@ const authCtrl = {
 
 //LOGIN
     //GET
-    router.get('/login', setLocals, authCtrl.login.getLogin);
+    router.get('/admin/login', setLocals, authCtrl.login.getAdminlogin);
     //POST ADMIN
-    router.post('/login', setLocals, validators.auth.login, authCtrl.login.postLoginAdmin);
+    router.post('/admin/login', setLocals, validators.auth.login, authCtrl.login.postLoginAdmin);
 
 //LOGOUT
 router.get('/logout', setLocals, authCtrl.login.postLogout);

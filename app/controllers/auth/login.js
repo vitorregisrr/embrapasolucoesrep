@@ -2,11 +2,11 @@ const Admin = require('../../models/admin');
 const Empresa = require('../../models/empresa');
 transporter = require('../../util/email-transporter')();
 
-exports.getLogin = (req, res, next) => {
+exports.getAdminlogin = (req, res, next) => {
     if (!req.user) {
-        return res.render('admin/auth/login', {
+        return res.render('admin/login', {
             pageTitle: 'Login',
-            path: '/login',
+            path: '/admin/login',
             form: null,
             errorMessage: req.errors,
             robotsFollow: false,

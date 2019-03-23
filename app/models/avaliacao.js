@@ -23,6 +23,11 @@ const Avaliacao = new Schema({
         required: true
     },
 
+    date: {
+        type: Date,
+        default: Date.now()
+    },
+    
     solucaoId: {
         type: Schema.Types.ObjectId,
         ref: 'Solucao'

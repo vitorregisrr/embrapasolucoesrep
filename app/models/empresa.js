@@ -22,6 +22,11 @@ const Empresa = new Schema({
         required: false
     },
 
+    date: {
+        type: Date,
+        default: Date.now()
+    },
+    
     encarregado: {
         type: String,
         required: false
@@ -30,7 +35,11 @@ const Empresa = new Schema({
     image: {
         type: Object,
         required: false
-    }
+    },
+
+    resetToken: String,
+
+    resetTokenExpiration: Date
 });
 
 module.exports = mongoose.model('Empresa', Empresa);

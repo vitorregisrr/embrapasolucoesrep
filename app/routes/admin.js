@@ -22,9 +22,9 @@ router.get('/admin', isAuth.admin, setLocals, adminCtrl.empresa.getSolicitacoes)
     router.get('/admin/solucoes/solicitacoes', isAuth.admin, setLocals, adminCtrl.solucao.getSolicitacoes);
 
     //GET NEW
-    router.get('/admin/solucao/new', isAuth.admin, setLocals, adminCtrl.solucao.getNewSolucao);
+    router.get('/admin/solucoes/new', isAuth.admin, setLocals, adminCtrl.solucao.getNewSolucao);
     //POST NEW
-    router.post('/admin/solucao/new', isAuth.admin, setLocals, validators.solucao.new, adminCtrl.solucao.postNewSolucao);
+    router.post('/admin/solucoes/new', isAuth.admin, setLocals, validators.solucao.new, adminCtrl.solucao.postNewSolucao);
     //GET EDIT
     router.get('/admin/solucao/edit/:solucaoId', isAuth.admin, setLocals, adminCtrl.solucao.getEditSolucao);
     //POST EDIT
@@ -45,9 +45,9 @@ router.get('/admin', isAuth.admin, setLocals, adminCtrl.empresa.getSolicitacoes)
     router.get('/admin/empresa/:empresaCod', isAuth.admin, setLocals, adminCtrl.empresa.getEmpresa);
 
     //GET NEW
-    router.get('/admin/empresa/new', isAuth.admin, setLocals, adminCtrl.empresa.getEmpresa);
+    router.get('/admin/empresas/new', isAuth.admin, setLocals, adminCtrl.empresa.getNewEmpresa);
     //POST NEW
-    router.post('/admin/empresa/new', isAuth.admin, setLocals, validators.empresa.new, adminCtrl.empresa.getEmpresa);
+    router.post('/admin/empresas/new', isAuth.admin, setLocals, validators.empresa.new, adminCtrl.empresa.getEmpresa);
     //GET EDIT
     router.get('/admin/empresa/edit/:empresaId', isAuth.admin, setLocals, adminCtrl.empresa.getEditEmpresa);
     //POST EDIT
