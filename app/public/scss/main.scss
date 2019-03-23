@@ -1,0 +1,31 @@
+body {
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    min-height: 100vh;
+    background-color: #f3f4f8;
+    overflow-x: hidden ;
+}
+
+
+@import 
+'reset',
+'colors',
+'trumps',
+'placeholders/dflex',
+'animations/pulse',
+'mixins/transition',
+'mixins/breakpoints',
+'placeholders/buttons/default',
+'placeholders/buttons/main',
+'sections/home',
+'components/footer.scss',
+'components/main-nav',
+'components/solucao',
+'components/avaliacao',
+'components/pagination',
+'components/banner',
+'components/form',
+'components/table',
+'components/admin-panel',
+'typo';

@@ -1,0 +1,74 @@
+<%- include('../includes/imports/head') %>
+</head>
+<body class="scrollbar-inner wow fadeIn">
+   <%- include('../includes/components/mainheader') %>
+   
+    <main>
+        <section id="home" class="img-webp">
+            <div class="container">
+                <h1 class="title mb-3">
+                    <span class="wow fadeIn" data-wow-delay="0.3s">Encontre as melhores</span>
+                    <span class="wow bounceInUp bold" data-wow-delay="0.7s">Soluções pecuárias</span>
+                </h1>
+                <form class="wow fadeInUp d-flex justify-content-center search-wrap" data-wow-delay="1.3s">
+                    <input class="search-bar" placeholder="Pesquisar solução por palavra chave" />
+                    <button type="submit" class="search-send"> <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section id="solucoes">
+            <div class="container">
+                <!-- <form action="">
+                <div class="row pt-3">
+                    <div class="col-3 wow fadeInUp">
+                        <input type="text" class="form-control" placeholder="Código">
+                    </div>
+                    <div class="col-3  wow fadeInUp">
+                        <select type="text" class="form-control"></select>
+                    </div>
+                    <div class="col-3  wow fadeInUp">
+                        <input type="text" class="form-control" placeholder="Código">
+                    </div>
+                    <div class="col-3  wow fadeInUp">
+                        <input type="text" class="form-control" placeholder="Código">
+                    </div>
+                </div>
+            </form> -->
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="solucao wow fadeInUp">
+                            <div class="solucao__img">
+                                <a href="solucao.html"> <img
+                                        src="https://scontent.fbgx1-1.fna.fbcdn.net/v/t1.0-9/39227151_941675502700541_1431883594736861184_o.jpg?_nc_cat=108&_nc_ht=scontent.fbgx1-1.fna&oh=8cc1d739eb2703ae5b76e8b34013fb90&oe=5D052A24"
+                                        alt=""></a>
+                                <div class="solucao__categoria">Software</div>
+                            </div>
+
+                            <div class="solucao__text">
+                                <h3 class="solucao__text__title">CampAdmin</h3>
+                                <p class="solucao__text__desc"> Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                    Nostrum quisquam ab hic quibusdam dolores doloremque! </p>
+                                <div class="solucao__text__rating">
+                                    <select class="starsrating" readonly="true">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="solucao__more">
+                                <a href="solucao.html" role="button" class="btn-main--outline">Ver mais</a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <%- include('../includes/components/footer')%>
+</body>
+<%- include('../includes/imports/end') %>

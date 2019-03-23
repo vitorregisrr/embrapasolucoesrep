@@ -1,0 +1,109 @@
+<%- include('../includes/imports/head') %>
+</head>
+
+<body class="scrollbar-inner wow fadeIn">
+    <%- include('../includes/components/mainheader') %>
+    <main>
+        <section id="banner" class="img-webp mb-3">
+            <div class="container">
+                <h1 class="title mb-3">
+                    <span class="wow fadeIn" data-wow-delay="0.3s">Solução</span>
+                    <span class="wow bounceInUp bold" data-wow-delay="0.7s">CampAdmin</span>
+                </h1>
+            </div>
+        </section>
+
+        <section class="perfil-solucao">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div id="imagensCarousel" class="carousel slide solucao-slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#imagensCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#imagensCarousel" data-slide-to="1"></li>
+                                <li data-target="#imagensCarousel" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="d-block w-100"
+                                        src="https://scontent.fbgx1-1.fna.fbcdn.net/v/t1.0-9/39227151_941675502700541_1431883594736861184_o.jpg?_nc_cat=108&_nc_ht=scontent.fbgx1-1.fna&oh=8cc1d739eb2703ae5b76e8b34013fb90&oe=5D052A24"
+                                        alt="First slide">
+                                </div>
+
+                            </div>
+                            <a class="carousel-control-prev d-flex" href="#imagensCarousel" role="button"
+                                data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </a>
+                            <a class="carousel-control-next  d-flex" href="#imagensCarousel" role="button"
+                                data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4 class="inner-title name text-left d-inline-block pt-3 pr-2">Camp Admin</h4>
+                        <div class="d-inline-block">
+                            <select class="starsrating" readonly="true">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <p class="inner-desc text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+                            aspernatur ad, id sapiente corrupti officiis similique doloribus, iusto ut nostrum vitae
+                            eligendi dicta consequatur quam, quo quas dolorem odio cumque! Lorem ipsum dolor sit amet
+                            consectetur adipisicing elit. Optio, laborum. Lorem ipsum dolor sit amet consectetur
+                            adipisicing elit. Explicabo sapiente placeat, repellendus porro maxime delectus adipisci
+                            distinctio fuga maiores architecto illo quis quasi nisi est, voluptate rerum quam, quod
+                            velit.</p>
+                    </div>
+
+                    <div class="col-12 pt-5">
+                        <h4 class="inner-title uppercase color-black">Avaliações</h4>
+
+                        <div class="row">
+                            <div class="col-12 p-3">
+                                <button class="btn-main float-right">Fazer avaliação</button>
+                            </div>
+                            <div class="col-lg-6">
+                                <article class="avaliacao">
+                                    <div class="avaliacao__img">
+                                        <img src="https://scontent.fbgx1-1.fna.fbcdn.net/v/t1.0-9/50775339_2245252348853297_6063047654923829248_n.jpg?_nc_cat=111&_nc_ht=scontent.fbgx1-1.fna&oh=93f702c1a49b867b236f97b923f1580d&oe=5D15B66A"
+                                            alt="">
+                                    </div>
+                                    <div class="avaliacao__content">
+                                        <h5 class="avaliacao__title d-inline-block pr-2">Solução Incrível!</h5>
+                                        <div class="avaliacao__rating d-inline-block">
+                                            <div class="d-inline-block">
+                                                <select class="starsrating" readonly="true">
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <p class="avaliacao__desc">Lorem ipsum dolor sit, amet consectetur adipisicing
+                                            elit. Similique facere laborum debitis. Quasi aperiam maxime praesentium
+                                            iusto! Consectetur, enim amet.</p>
+                                        <p class="avaliacao__author text-right">Vitor Régis de Ramos, feito em
+                                            21/03/2019</p>
+                                    </div>
+                                </article>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    <%- include('../includes/components/footer')%>
+</body>
+<%- include('../includes/imports/end') %>

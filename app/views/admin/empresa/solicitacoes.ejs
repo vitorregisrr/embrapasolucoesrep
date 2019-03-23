@@ -1,0 +1,73 @@
+<%- include('../../includes/imports/head') %>
+
+</head>
+
+<body class="scrollbar-inner wow fadeIn">
+    <%- include('../../includes/components/mainheader') %>
+
+    <main>
+        <section id="banner" class="img-webp mb-3">
+            <div class="container">
+                <h1 class="title mb-3">
+                    <span class="wow fadeIn" data-wow-delay="0.3s">Admnistrador</span>
+                    <span class="wow bounceInUp bold" data-wow-delay="0.7s">Solicitações de exibição</span>
+                </h1>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <%- include('../../includes/components/adminpanel') %>
+                </div>
+                <div class="col-lg-8">
+                    <div class="admin-wrap">
+                        <h3 class="inner-title text-left">Solicitações de empresas</h3>
+                        <p class="form-info text-left"><i class="fa fa-info-circle pr-2" area-hidden="true"></i>Gerencie
+                            as solicitações que empresas fizeram para se cadastrar. Quando aceitas, recebem um código pelo email fornecido para prosseguir com o cadastro.</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="responsive-table">
+                                <table class="flat-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Email</th>
+                                            <th>Telefone</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Evolve</td>
+                                            <td>vitorregisrr@gmail.com</td>
+                                            <td>(53)99919-7942</td>
+                                            <td>
+                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Analisar"><i class="fa fa-eye icon"></i></a>
+                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Aceitar"><i class="fa fa-check icon success"></i></a>
+                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Rejeitar"><i class="fa fa-ban icon danger"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Evolve</td>
+                                            <td>vitorregisrr@gmail.com</td>
+                                            <td>(53)99919-7942</td>
+                                            <td>
+                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Analisar"><i class="fa fa-eye icon"></i></a>
+                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Aceitar"><i class="fa fa-check icon success"></i></a>
+                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Rejeitar"><i class="fa fa-ban icon danger"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../../includes/components/footer')%>
+</body>
+
+<%- include('../../includes/imports/end') %>

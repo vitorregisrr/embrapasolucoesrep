@@ -1,0 +1,84 @@
+.solucao {
+    height: 370px;
+    background: #fff;
+    border-radius: 4px;
+    margin: 20px 0;
+    box-shadow: 2.485px 2.485px 21px 0px rgba(0, 0, 0, 0.048);
+
+    &__img {
+        height: 40%;
+        position: relative;
+
+        img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+
+        }
+    }
+
+    &__categoria {
+        position: absolute;
+        top: 78%;
+        right: 50%;
+        transform: translateX(50%);
+        background-color: #fff;
+        border-radius: 15px;
+        padding: 10px 20px 15px 20px;
+        font-size: 15px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: $main-color;
+        text-align: center;
+    }
+
+    &__text {
+        padding: 15px 30px;
+        height: 40%;
+        text-align: left;
+
+        &__title {
+            color: rgb(44, 44, 44);
+            font-size: 16px;
+            font-weight: 600;
+            white-space: wrap;
+            text-overflow: ellipsis;
+        }
+
+        &__desc {
+            color: rgb(161, 161, 161);
+            font-size: 14px;
+            font-weight: 300;
+            overflow: hidden;
+            max-height: 90%;
+        }
+    }
+
+    &__more {
+        height: 20%;
+        box-shadow: 2.485px 2.485px 21px 0px rgba(0, 0, 0, 0.041);
+        @extend %dflex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.solucao-slide {
+    .carousel-item {
+        height: 300px !important;
+    }
+
+    img {
+        height: 100% !important;
+        border-radius: 3px !important;
+        object-fit: cover !important;
+    }
+}
+
+.perfil-solucao {
+
+    .inner-title.name {
+        font-size: 40px;
+        color: $main-black;
+    }
+}
