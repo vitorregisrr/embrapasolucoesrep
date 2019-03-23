@@ -14,10 +14,10 @@ try {
 
 
 cloudinary.config({
-    cloud_name: 'dhenuhnbj',
+    cloud_name: 'embrapasolucoes',
     api_key: CLOUDINARY_KEY,
     api_secret: CLOUDINARY_SECRET,
-    upload_preset: 'planagroadmin'
+    upload_preset: 'website'
 });
 
 module.exports = cloudinary;
