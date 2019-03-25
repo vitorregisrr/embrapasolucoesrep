@@ -1,10 +1,20 @@
+const Solucao = require('../../models/solucao'),
+    Empresa = require('../../models/empresa'),
+    Avaliacao = require('../../models/avaliacao');
+    
 exports.getAvaliacoes = (req, res, next) => {
-    res.render('admin/avaliacao/avaliacoes', {
-        pageTitle: 'Avaliações',
-        path: "admin/avaliacao",
-        robotsFollow: false,
-        errorMessage: []
-    });
+   Avaliacao.find({ status: 'aprovado'})
+   .sort({ date: -1})
+   .then( avaliacoes => {
+        res.render('admin/avaliacao/avaliacoes', {
+            pageTitle: 'Avaliações',
+            path: "admin/avaliacao",
+            robotsFollow: false,
+            errorMessage: [],
+            avaliacoes
+        });
+   })
+   .catch( err => next(err, 500))
 }
 
 exports.getSolicitacoes = (req, res, next) => {

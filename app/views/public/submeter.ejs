@@ -41,48 +41,46 @@
                                             </h3>
                                             <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Preencha o
                                                 formulário com dados da empresa e da primeira solução que quer
-                                                cadastrar, nós analisaremos e enviaremos para você um código para criar
-                                                uma
-                                                conta!</p>
+                                                cadastrar, nós analisaremos os dados, e se sua empresa for aprovada,
+                                                entraremos em contato com um código para prosseguir com o cadastro conta!</p>
                                         </div>
                                         <div class="col-12 text-left">
                                             <h3 class="form-title">Dados da empresa</h3>
                                         </div>
-                                        <div class="col-12">
-                                            <input type="text" class="form-control" placeholder="Nome da empresa">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="nome" placeholder="Nome da empresa">
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" placeholder="Email da empresa">
+                                            <input type="text" class="form-control" name="email" placeholder="Email da empresa">
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" placeholder="Nome do encarregado">
+                                            <input type="text" class="form-control" name="telefone" placeholder="Email da empresa">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="encarregado" placeholder="Nome do encarregado">
                                         </div>
                                         <div class="col-12 text-left">
                                             <h3 class="form-title">Dados da solução</h3>
-                                            <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Não se preocupe,
-                                                você
-                                                poderá editar ou submeter outras soluções da sua empresa com o login
-                                                que
-                                                vamos dispor a você. Essa informação é só para termos uma idéia.
+                                            <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Informe os dados da primeira solução que gostaria de cadastrar.
+                                            A solução não será cadastrada por enquanto, é só para termos uma idéia do que sua empresa tem a oferecer.
                                             </p>
                                         </div>
                                         <div class="col-12">
-                                            <input type="text" class="form-control" placeholder="Nome da solução">
+                                            <input type="text" name="nome_solucao" class="form-control" placeholder="Nome da solução">
                                         </div>
                                         <div class="col-md-6">
-                                            <select type="text" class="form-control" placeholder="Tipo">
+                                            <select type="text" class="form-control selectpicker" name="categoria_solucao" title="Categoria" placeholder="Tipo">
                                                 <option value="">Aplicativo</option>
                                                 <option value="">Sistema</option>
                                                 <option value="">Software</option>
                                                 <option value="">Website</option>
-                                                <select>
+                                            <select>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" placeholder="Link até a solução">
+                                            <input type="text" class="form-control" placeholder="Link até a solução" name="link_solucao">
                                         </div>
                                         <div class="col-12">
-                                            <textarea type="text" class="form-control" rows="3"
-                                                placeholder="Descrição da solução"></textarea>
+                                            <textarea type="text" class="form-control" rows="3" placeholder="Descrição da solução" name="descricao_solucao"></textarea>
                                         </div>
                                         <div class="col-12">
                                             <button class="btn-main--square w-100 mt-2">Enviar</button>

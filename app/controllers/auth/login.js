@@ -51,7 +51,7 @@ exports.postLoginAdmin = (req, res, next) => {
                     return res.redirect('/admin');
                 });
 
-            }else {
+            } else {
                 return res
                     .status(422)
                     .render('admin/login', {
@@ -67,7 +67,7 @@ exports.postLoginAdmin = (req, res, next) => {
                         robotsFollow: false,
                     })
             }
-            
+
         })
         .catch(err => console.log(err));
 }
@@ -108,8 +108,8 @@ exports.postLoginEmpresa = (req, res, next) => {
                     }
                     return res.redirect('/empresa');
                 });
-
-            }else {
+                
+            } else {
                 return res
                     .status(422)
                     .render('empresa/login', {
@@ -125,7 +125,7 @@ exports.postLoginEmpresa = (req, res, next) => {
                         robotsFollow: false,
                     })
             }
-            
+
         })
         .catch(err => console.log(err));
 }

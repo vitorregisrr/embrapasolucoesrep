@@ -37,6 +37,17 @@ const Empresa = new Schema({
         required: false
     },
 
+    codigoCadastro: {
+        type: String,
+        required: false
+    },
+
+    status: {
+        type: String,
+        required: true,
+        default: 'pendente'
+    },
+
     resetToken: String,
 
     resetTokenExpiration: Date

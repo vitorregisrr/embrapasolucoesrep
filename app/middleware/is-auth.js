@@ -12,7 +12,7 @@ exports.admin = (req, res, next) => {
             .catch(err => console.log(err));
     } else {
         req.admin = null;
-        return res.redirect('/login');
+        return res.redirect('/admin/login');
     }
 
 }
