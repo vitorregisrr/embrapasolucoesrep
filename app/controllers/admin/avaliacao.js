@@ -11,7 +11,8 @@ exports.getAvaliacoes = (req, res, next) => {
             path: "admin/avaliacao",
             robotsFollow: false,
             errorMessage: [],
-            avaliacoes
+            avaliacoes,
+            form: false
         });
    })
    .catch( err => next(err, 500))
@@ -22,7 +23,8 @@ exports.getSolicitacoes = (req, res, next) => {
         pageTitle: 'Solicitações de Avaliação',
         path: "admin/avalaicao/solicitacoes",
         robotsFollow: false,
-        errorMessage: []
+        errorMessage: [],
+        form: false
     });
 }
 
@@ -31,7 +33,8 @@ exports.deleteAvaliacao = (req, res, next) => {
         pageTitle: 'Soluções',
         path: "admin/depoimentos",
         robotsFollow: false,
-        errorMessage: []
+        errorMessage: [],
+        form: false
     });
 }
 
@@ -40,6 +43,7 @@ exports.acceptAvaliacao = (req, res, next) => {
         pageTitle: 'Soluções',
         path: "admin/depoimentos",
         robotsFollow: false,
-        errorMessage: []
+        errorMessage: [],
+        form: false
     });
 }

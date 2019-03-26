@@ -28,6 +28,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
+                            <% if(solucoes.length > 0) { %>
                             <div class="responsive-table">
                                 <table class="flat-table">
                                     <thead>
@@ -38,39 +39,41 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <% solucoes.forEach( solucao => { %>
                                         <tr>
-                                            <td> <a href="">CampAdmin</a></td>
-                                            <td> <a href="">Evolve</a> </td>
+                                            <td> <a href="/admin/solucao/<%= solucao.codigo %>"><%= solucao.nome %></a>
+                                            </td>
+                                            <td> <a
+                                                    href="/admin/empresa/<%= solucao.empresaId ? solucao.empresaId.id : '' %>"><%= solucao.empresaId ? solucao.empresaId.nome : '' %></a>
+                                            </td>
                                             <td>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip"
+                                                <a href="/admin/solucao/<%= solucao.codigo %>" role="button" class="acao" data-toggle="tooltip"
                                                     data-placement="bottom" title="Analisar"><i
                                                         class="fa fa-eye icon"></i></a>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Aceitar"><i
-                                                        class="fa fa-check icon success"></i></a>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Rejeitar"><i
-                                                        class="fa fa-ban icon danger"></i></a>
+                                                <form data-confirm="true" action="/admin/solucao/aprovar" class="d-inline-block"
+                                                    method="POST" data-confirm="true">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <input type="hidden" name="id" value="<%= solucao.id %>">
+                                                    <button type="submit" class="acao" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Aceitar"><i
+                                                            class="fa fa-check icon success"></i></button>
+                                                </form>
+                                                <form data-confirm="true" action="/admin/solucao/rejeitar" class="d-inline-block"
+                                                    method="POST" data-confirm="true">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <input type="hidden" name="id" value="<%= solucao.id %>">
+                                                    <button type="submit" class="acao" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Rejeitar"><i
+                                                            class="fa fa-ban icon danger"></i></button>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>CampAdmin</td>
-                                            <td>Evolve</td>
-                                            <td>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Analisar"><i
-                                                        class="fa fa-eye icon"></i></a>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Aceitar"><i
-                                                        class="fa fa-check icon success"></i></a>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Rejeitar"><i
-                                                        class="fa fa-ban icon danger"></i></a>
-                                            </td>
-                                        </tr>
+                                        <% })%>
                                     </tbody>
                                 </table>
                             </div>
+                            <% } else { %>
+                            <h3 class="inner-title">Nenhuma solução encontrada.</h3>
+                            <% } %>
                         </div>
                     </div>
                 </div>

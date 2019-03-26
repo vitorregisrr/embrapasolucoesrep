@@ -21,7 +21,8 @@ exports.getAvalicoes = (req, res, next) => {
                                 path: "admin/avaliacoes",
                                 robotsFollow: false,
                                 errorMessage: [],
-                                avaliacoes
+                                avaliacoes,
+                                form: false
                             });
                         })
                         .catch(err => next(err, 500));

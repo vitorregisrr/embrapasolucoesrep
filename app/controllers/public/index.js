@@ -1,10 +1,20 @@
+const Solucao = require('../../models/solucao'),
+    Empresa = require('../../models/empresa'),
+    Avaliacao = require('../../models/avaliacao');
+    
 exports.getIndex = (req, res, next) => {
-    res.render('public/home', {
-        pageTitle: '',
-        path: "/",
-        robotsFollow: false,
-        errorMessage: []
+    Solucao.find({ status: 'aprovado'})
+    .sort({ date: -1})
+    .then( solucoes => {
+        res.render('public/home', {
+            pageTitle: '',
+            path: "/",
+            robotsFollow: false,
+            errorMessage: [],
+            solucoes
+        })
     })
+    .catch( err => next(err, 500))
 }
 
 exports.getSubmeter = (req, res, next) => {
@@ -12,6 +22,7 @@ exports.getSubmeter = (req, res, next) => {
         pageTitle: '',
         path: "/",
         robotsFollow: false,
-        errorMessage: []
+        errorMessage: [],
+        form: false
     })
 }

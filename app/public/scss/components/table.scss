@@ -39,6 +39,13 @@
 }
 
 .acao {
+    background: none;
+    border: none;
+    outline: none; 
+    display: inline-block;
+    line-height: none;
+    cursor: pointer;
+
     @include transition(0.3s, ease-in-out);
     &:hover{
         text-decoration: none;
@@ -59,8 +66,12 @@
             background-color: rgb(219, 51, 79);
         }
 
+        &.warning{
+            background-color: rgb(219, 146, 51);
+        }
+
         &.success{
-            background-color: $main-color;
+            background-color: rgb(103, 204, 111);
         }
     }
 }

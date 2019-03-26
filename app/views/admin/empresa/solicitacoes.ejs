@@ -28,6 +28,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
+                        <% if( empresas.length > 0 ) { %>
                             <div class="responsive-table">
                                 <table class="flat-table">
                                     <thead>
@@ -38,29 +39,32 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <% empresas.forEach( empresa => { %>
                                         <tr>
-                                            <td>Evolve</td>
-                                            <td>vitorregisrr@gmail.com</td>
-                                            <td>(53)99919-7942</td>
+                                            <td><%= empresa.nome %></td>
+                                            <td><%= empresa.email %></td>
+                                            <td><%= empresa.telefone %></td>
                                             <td>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Analisar"><i class="fa fa-eye icon"></i></a>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Aceitar"><i class="fa fa-check icon success"></i></a>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Rejeitar"><i class="fa fa-ban icon danger"></i></a>
+                                                <a href="/admin/empresa/<%= empresa.id %>" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Analisar"><i class="fa fa-eye icon"></i></a>
+                                                <form action="/admin/empresa/aprovar" data-confirm="true" class="d-inline-block" method="POST" data-confirm="true"> 
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <input type="hidden" name="id" value="<%= empresa.id %>">
+                                                    <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom" title="Aceitar"><i class="fa fa-check icon success"></i></button>
+                                                </form>
+                                                <form action="/admin/empresa/rejeitar" data-confirm="true" class="d-inline-block" method="POST" data-confirm="true"> 
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <input type="hidden" name="id" value="<%= empresa.id %>">
+                                                    <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom" title="Rejeitar"><i class="fa fa-ban icon danger"></i></button>
+                                                </form>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>Evolve</td>
-                                            <td>vitorregisrr@gmail.com</td>
-                                            <td>(53)99919-7942</td>
-                                            <td>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Analisar"><i class="fa fa-eye icon"></i></a>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Aceitar"><i class="fa fa-check icon success"></i></a>
-                                                <a href="" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Rejeitar"><i class="fa fa-ban icon danger"></i></a>
-                                            </td>
-                                        </tr>
+                                        <% }) %>
                                     </tbody>
                                 </table>
                             </div>
+                            <% } else { %>
+                                <h3 class="inner-title">Nenhuma solicitação encontrada.</h3>
+                            <% } %>
                         </div>
                     </div>
                 </div>

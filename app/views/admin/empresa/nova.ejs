@@ -28,18 +28,23 @@
                             fornecido um código para a empresa se cadastrar escolhendo
                             seu usuário e senha através do site.</p>
                     </div>
-                    <form action="">
+                    <form action="/admin/empresas/new" method="POST">
+                        <%- include('../../includes/form/errorBox') %>
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <div class="row">
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <input type="text" class="form-control" placeholder="Nome da empresa">
+                                    <div class="col-6">
+                                        <input type="text" required name="nome" class="form-control" placeholder="Nome da empresa">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Email da empresa">
+                                        <input type="text" required name="email" class="form-control" placeholder="Email da empresa">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Nome do encarregado">
+                                        <input type="text" required name="telefone" class="form-control" placeholder="Telefone da empresa">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" required name="encarregado" class="form-control" placeholder="Nome do encarregado">
                                     </div>
                                     <div class="col-12">
                                         <button class="btn-main--square w-100 mt-2">Criar</button>

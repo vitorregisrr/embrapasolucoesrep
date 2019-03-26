@@ -11,10 +11,10 @@ exports.solicitarCadastro = (req, res, next) => {
     };
 
     const solucao = {
-        nome_solucao: req.body.nome_solucao,
-        categoria_solucao: req.body.categoria_solucao,
-        link_solucao: req.body.link_solucao,
-        descricao_solucao: req.body.descricao_solucao
+        nome: req.body.nome_solucao,
+        categoria_: req.body.categoria_solucao,
+        link: req.body.link_solucao,
+        descricao: req.body.descricao_solucao
     }
 
     new Empresa( {
@@ -25,12 +25,12 @@ exports.solicitarCadastro = (req, res, next) => {
     .then( empresa => {
        new Solucao( {
            ...solucao,
-           status: 'pendente',
+           status: 'empresapendente',
            empresaId: empresa
        })
        .save()
        .then( solucao => {
-            res.render('/public/submissaoconcluida', {
+            res.render('public/submissaoconcluida', {
                 //informacoes da pagina que mostra os dados submetidos
             });
        })

@@ -6,6 +6,7 @@ exports.getSolucoes = (req, res, next) => {
     Solucao.find({
             status: 'aprovado'
         })
+        .populate('empresaId')
         .sort({
             date: -1
         })
@@ -15,7 +16,8 @@ exports.getSolucoes = (req, res, next) => {
                 path: "admin/solucoes",
                 robotsFollow: false,
                 errorMessage: [],
-                solucoes
+                solucoes,
+                form: false
             });
         })
         .catch(err => next(err, 500))
@@ -35,7 +37,7 @@ exports.getSolicitacoes = (req, res, next) => {
                 path: "admin/solucoes",
                 robotsFollow: false,
                 errorMessage: [],
-                solucoes: solucoes.filter(solucao => solucao.empresaId.status != 'pendente'),
+                solucoes: solucoes.filter(solucao => solucao.empresaId ? solucao.empresaId.status != 'pendente' : true),
             });
         })
         .catch(err => next(err, 500))
@@ -54,7 +56,8 @@ exports.getEditSolucao = (req, res, next) => {
                 path: "admin/solucoes",
                 robotsFollow: false,
                 errorMessage: [],
-                solucao
+                solucao,
+                form: false
             });
         })
         .catch(err => next(err, 500));
@@ -65,7 +68,8 @@ exports.getNewSolucao = (req, res, next) => {
         pageTitle: 'Nova solução',
         path: "admin/depoimentos",
         robotsFollow: false,
-        errorMessage: []
+        errorMessage: [],
+        form: false
     });
 }
 
@@ -272,35 +276,60 @@ exports.removeSolucaoImage = (req, res, next) => {
         }))
 }
 
-exports.rejeitarSolucao = (req, res, next) => {
+
+exports.aprovarSolucao = (req, res, next) => {
+
     Solucao.findOne({
             _id: req.body.id
         })
-
         .then(solucao => {
             if (!solucao) {
-                res.redirect('/admin/solucao/solicitacoes')
+                res.redirect('/admin/solucoes/solicitacoes')
             }
 
-            solucao.status = 'rejeitado'
-            solucao.save();
+            solucao.status = 'aprovado';
+            solucao.save()
+            .then( resul => res.redirect('/admin/solucoes/solicitacoes'))
+            .catch( err => next(err, 500))
         })
 
         .catch(err => next(err));
 }
 
-exports.aprovarSolucao = (req, res, next) => {
+
+exports.rejeitarSolucao = (req, res, next) => {
+
     Solucao.findOne({
             _id: req.body.id
         })
-
         .then(solucao => {
             if (!solucao) {
-                res.redirect('/admin/solucao/solicitacoes')
+                res.redirect('/admin/solucaos/solicitacoes')
             }
 
-            solucao.status = 'aprovado'
-            solucao.save();
+            solucao.status = 'rejeitado';
+            solucao.save()
+            .then( solucao => res.redirect('/admin/solucoes/solicitacoes') )
+            .catch( err => next(err, 500))
+        })
+
+        .catch(err => next(err));
+}
+
+exports.pendenciarSolucao = (req, res, next) => {
+
+    Solucao.findOne({
+            _id: req.body.id
+        })
+        .then(solucao => {
+            if (!solucao) {
+                res.redirect('/admin/solucaos/solicitacoes')
+            }
+
+            solucao.status = 'pendente';
+            solucao.save()
+            .then( solucao => res.redirect('/admin/solucoes/solicitacoes') )
+            .catch( err => next(err, 500))
         })
 
         .catch(err => next(err));

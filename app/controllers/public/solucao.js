@@ -1,10 +1,24 @@
+const Solucao = require('../../models/solucao'),
+    Empresa = require('../../models/empresa'),
+    Avaliacao = require('../../models/avaliacao');
+    
 exports.getSolucao = (req, res, next) => {
-    res.render('public/solucao', {
-        pageTitle: '',
-        path: "/solucao",
-        robotsFollow: false,
-        errorMessage: []
+    Solucao.findOne({ codigo:req.params.codigo})
+    .then( solucao => {
+        if( solucao.status != 'aprovado' && !req.session.admin){
+            return res.redirect('/')
+        }
+
+        return res.render('public/solucao', {
+            pageTitle: '',
+            path: "/solucao",
+            robotsFollow: false,
+            errorMessage: [],
+            form: false,
+            solucao
+        })
     })
+    .catch( err => next(err, 500))
 }
 
 exports.getSolicitacao = (req, res, next) => {
@@ -12,7 +26,8 @@ exports.getSolicitacao = (req, res, next) => {
         pageTitle: '',
         path: "/solicitacao",
         robotsFollow: false,
-        errorMessage: []
+        errorMessage: [],
+        form: false
     })
 }
 
@@ -21,6 +36,7 @@ exports.postSolicitacao = (req, res, next) => {
         pageTitle: '',
         path: "/solicitacao",
         robotsFollow: false,
-        errorMessage: []
+        errorMessage: [],
+        form: false
     })
 }

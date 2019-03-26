@@ -3,6 +3,7 @@ exports.postAvaliacao = (req, res, next) => {
         pageTitle: '',
         path: "/",
         robotsFollow: false,
-        errorMessage: []
+        errorMessage: [],
+        form: false
     })
 }

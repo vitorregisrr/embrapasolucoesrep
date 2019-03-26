@@ -26,11 +26,17 @@ router.get('/admin', isAuth.admin, setLocals, adminCtrl.empresa.getSolicitacoes)
     //POST NEW
     router.post('/admin/solucoes/new', isAuth.admin, setLocals, validators.solucao.new, adminCtrl.solucao.postNewSolucao);
     //GET EDIT
-    router.get('/admin/solucao/edit/:solucaoId', isAuth.admin, setLocals, adminCtrl.solucao.getEditSolucao);
+    router.get('/admin/solucao/edit/:codigo', isAuth.admin, setLocals, adminCtrl.solucao.getEditSolucao);
     //POST EDIT
     router.post('/admin/solucao/edit', isAuth.admin, setLocals, validators.solucao.edit, adminCtrl.solucao.postEditSolucao);
     //DELETE 
     router.post('/admin/solucao/delete', isAuth.admin, setLocals, adminCtrl.solucao.deleteSolucao);
+    //APROVAR 
+    router.post('/admin/solucao/aprovar', isAuth.admin, setLocals, adminCtrl.solucao.aprovarSolucao);   
+    //REJEITAR 
+    router.post('/admin/solucao/rejeitar', isAuth.admin, setLocals, adminCtrl.solucao.rejeitarSolucao); 
+    //PENDENCIAR 
+    router.post('/admin/solucao/pendenciar', isAuth.admin, setLocals, adminCtrl.solucao.pendenciarSolucao);  
     //API
         //NOVA FOTO  PARA SOLUCAO
         router.post('/api/solucao/novafoto', isAuth.admin, adminCtrl.solucao.setSolucaoImage);
@@ -42,18 +48,22 @@ router.get('/admin', isAuth.admin, setLocals, adminCtrl.empresa.getSolicitacoes)
 //EMPRESA
     router.get('/admin/empresas', isAuth.admin, setLocals, adminCtrl.empresa.getEmpresas);
     router.get('/admin/empresas/solicitacoes', isAuth.admin, setLocals, adminCtrl.empresa.getSolicitacoes);
-    router.get('/admin/empresa/:empresaCod', isAuth.admin, setLocals, adminCtrl.empresa.getEmpresa);
+    router.get('/admin/empresa/:id', isAuth.admin, setLocals, adminCtrl.empresa.getEmpresa);
 
     //GET NEW
     router.get('/admin/empresas/new', isAuth.admin, setLocals, adminCtrl.empresa.getNewEmpresa);
     //POST NEW
-    router.post('/admin/empresas/new', isAuth.admin, setLocals, validators.empresa.new, adminCtrl.empresa.getEmpresa);
+    router.post('/admin/empresas/new', isAuth.admin, setLocals, validators.empresa.new, adminCtrl.empresa.postNewEmpresa);
     //GET EDIT
-    router.get('/admin/empresa/edit/:empresaId', isAuth.admin, setLocals, adminCtrl.empresa.getEditEmpresa);
+    router.get('/admin/empresa/edit/:id', isAuth.admin, setLocals, adminCtrl.empresa.getEditEmpresa);
     //POST EDIT
     router.post('/admin/empresa/edit', isAuth.admin, setLocals, validators.empresa.edit, adminCtrl.empresa.postEditEmpresa);
     //DELETE 
-    router.post('/admin/empresa/delete', isAuth.admin, setLocals, adminCtrl.empresa.deleteEmpresa);   
+    router.post('/admin/empresa/delete', isAuth.admin, setLocals, adminCtrl.empresa.deleteEmpresa);
+    //APROVAR 
+    router.post('/admin/empresa/aprovar', isAuth.admin, setLocals, adminCtrl.empresa.aprovarEmpresa);   
+    //REJEITAR 
+    router.post('/admin/empresa/rejeitar', isAuth.admin, setLocals, adminCtrl.empresa.rejeitarEmpresa);   
     
 //AVALIACOES
     router.get('/admin/avaliacoes', isAuth.admin, setLocals, adminCtrl.avaliacao.getAvaliacoes);

@@ -1,8 +1,9 @@
 <%- include('../includes/imports/head') %>
 </head>
+
 <body class="scrollbar-inner wow fadeIn">
-   <%- include('../includes/components/mainheader') %>
-   
+    <%- include('../includes/components/mainheader') %>
+
     <main>
         <section id="home" class="img-webp">
             <div class="container">
@@ -37,19 +38,22 @@
                 </div>
             </form> -->
                 <div class="row">
+                    <% solucoes.forEach( solucao => { %>
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="solucao wow fadeInUp">
                             <div class="solucao__img">
-                                <a href="solucao.html"> <img
-                                        src="https://scontent.fbgx1-1.fna.fbcdn.net/v/t1.0-9/39227151_941675502700541_1431883594736861184_o.jpg?_nc_cat=108&_nc_ht=scontent.fbgx1-1.fna&oh=8cc1d739eb2703ae5b76e8b34013fb90&oe=5D052A24"
-                                        alt=""></a>
-                                <div class="solucao__categoria">Software</div>
+                                <a href="/solucao/<%= solucao.codigo %>">
+                                    <img src="https://scontent.fbgx1-1.fna.fbcdn.net/v/t1.0-9/39227151_941675502700541_1431883594736861184_o.jpg?_nc_cat=108&_nc_ht=scontent.fbgx1-1.fna&oh=8cc1d739eb2703ae5b76e8b34013fb90&oe=5D052A24"
+                                        alt="<%= solucao.nome %>">
+                                </a>
+                                <div class="solucao__categoria"><%= solucao.categoria %></div>
                             </div>
 
                             <div class="solucao__text">
-                                <h3 class="solucao__text__title">CampAdmin</h3>
-                                <p class="solucao__text__desc"> Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Nostrum quisquam ab hic quibusdam dolores doloremque! </p>
+                                <h3 class="solucao__text__title"><%= solucao.nome %></h3>
+                                <div class="solucao__text__desc">
+                                    <p><%= solucao.descricao %></p>
+                                </div>
                                 <div class="solucao__text__rating">
                                     <select class="starsrating" readonly="true">
                                         <option value="1">1</option>
@@ -62,10 +66,12 @@
                             </div>
 
                             <div class="solucao__more">
-                                <a href="solucao.html" role="button" class="btn-main--outline">Ver mais</a>
+                                <a href="/solucao/<%= solucao.codigo %>" role="button" class="btn-main--outline">Ver
+                                    mais</a>
                             </div>
                         </article>
                     </div>
+                    <% })%>
                 </div>
             </div>
         </section>

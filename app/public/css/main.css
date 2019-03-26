@@ -367,19 +367,22 @@ a {
   .solucao__text {
     padding: 15px 30px;
     height: 40%;
-    text-align: left; }
+    text-align: left;
+    width: 100%; }
     .solucao__text__title {
       color: #2c2c2c;
       font-size: 16px;
       font-weight: 600;
-      white-space: wrap;
-      text-overflow: ellipsis; }
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden; }
     .solucao__text__desc {
-      color: #a1a1a1;
-      font-size: 14px;
-      font-weight: 300;
-      overflow: hidden;
-      max-height: 90%; }
+      height: 70px;
+      overflow: hidden; }
+      .solucao__text__desc p {
+        color: #a1a1a1;
+        font-size: 14px;
+        font-weight: 300; }
   .solucao__more {
     height: 20%;
     box-shadow: 2.485px 2.485px 21px 0px rgba(0, 0, 0, 0.041);
@@ -608,6 +611,12 @@ select.form-control, .selectpicker-button {
       color: #5184e2; }
 
 .acao {
+  background: none;
+  border: none;
+  outline: none;
+  display: inline-block;
+  line-height: none;
+  cursor: pointer;
   -webkit-transition: ease-in-out 0.3s ease-in-out;
   -moz-transition: ease-in-out 0.3s ease-in-out;
   -ms-transition: ease-in-out 0.3s ease-in-out;
@@ -627,8 +636,10 @@ select.form-control, .selectpicker-button {
     color: #fff; }
     .acao .icon.danger {
       background-color: #db334f; }
+    .acao .icon.warning {
+      background-color: #db9233; }
     .acao .icon.success {
-      background-color: #8fc152; }
+      background-color: #67cc6f; }
 
 #adminPanel {
   margin: 20px 0;

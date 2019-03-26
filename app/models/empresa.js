@@ -4,17 +4,22 @@ const Schema = mongoose.Schema;
 const Empresa = new Schema({
     email: {
         type: String,
-        required: true
+        required: false
     },
 
     usuario: {
         type: String,
-        required: true
+        required: false
     },
 
     password: {
         type: String,
-        required: true
+        required: false
+    },
+
+    nome: {
+        type: String,
+        required: false
     },
 
     telefone: {
