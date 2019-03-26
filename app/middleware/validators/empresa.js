@@ -4,10 +4,10 @@ exports.solicitacao = [
     [
         body('nome', 'O campo nome é obrigatório.')
         .isLength({
-            min: 8,
-            max:30
+            min: 4,
+            max:20
         })
-        .withMessage('O nome deve ter entre 8 e 30 letras'),
+        .withMessage('O nome deve ter entre 4 e 20 letras'),
 
         body('email', 'O campo e-mail é obrigatório.')
         .isEmail()
@@ -18,10 +18,10 @@ exports.solicitacao = [
         
         body('nome_solucao', 'O nome da solução é inválido.')
         .isLength({
-            min: 8,
+            min: 4,
             max: 30
         })
-        .withMessage('O nome da solução deve ter entre 8 e 30 letras.'),
+        .withMessage('O nome da solução deve ter entre 4 e 30 letras.'),
 
         body('link_solucao', 'O link da solução é inválido.')
         .isURL()
@@ -62,10 +62,10 @@ exports.new = [
     [
         body('nome', 'O campo nome é obrigatório.')
         .isLength({
-            min: 8,
+            min: 4,
             max:30
         })
-        .withMessage('O nome deve ter entre 8 e 30 letras'),
+        .withMessage('O nome deve ter entre 4 e 30 letras'),
 
         body('email', 'O campo e-mail é obrigatório.')
         .isEmail()

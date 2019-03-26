@@ -1,6 +1,7 @@
 const Solucao = require('../../models/solucao'),
     Empresa = require('../../models/empresa'),
-    Avaliacao = require('../../models/avaliacao');
+    Avaliacao = require('../../models/avaliacao'),
+    cloudinary = require('../../util/cloudinary');
 
 exports.getSolucoes = (req, res, next) => {
     Solucao.find({
@@ -45,12 +46,14 @@ exports.getSolicitacoes = (req, res, next) => {
 
 exports.getEditSolucao = (req, res, next) => {
     Solucao.findOne({
-            id: req.params.solucaoId
+            codigo: req.params.codigo
         })
-        .sort({
-            date: -1
-        })
+        .populate('empresaId')
         .then(solucao => {
+            if(!solucao){
+                return next(new Error('Solução não encontrada para editar.'), 500)
+            }
+            
             res.render('admin/solucao/editar', {
                 pageTitle: 'Editar soluçao',
                 path: "admin/solucoes",
@@ -66,7 +69,7 @@ exports.getEditSolucao = (req, res, next) => {
 exports.getNewSolucao = (req, res, next) => {
     res.render('admin/solucao/nova', {
         pageTitle: 'Nova solução',
-        path: "admin/depoimentos",
+        path: "admin/solucoes/new",
         robotsFollow: false,
         errorMessage: [],
         form: false
@@ -97,6 +100,8 @@ exports.postEditSolucao = (req, res, next) => {
                                 solucao.mainImage = image;
                                 solucao.nome = req.body.nome;
                                 solucao.descricao = req.body.descricao;
+                                solucao.empresaId = req.body.empresaId;
+                                solucao.link = req.body.link;
                                 solucao.categoria = req.body.categoria;
 
                                 if (req.body.empresaId && req.body.empresaId != '' && !req.session.empresa) {
@@ -119,6 +124,8 @@ exports.postEditSolucao = (req, res, next) => {
                 solucao.mainImage = image;
                 solucao.nome = req.body.nome;
                 solucao.descricao = req.body.descricao;
+                solucao.empresaId = req.body.empresaId;
+                solucao.link = req.body.link;
                 solucao.categoria = req.body.categoria;
 
                 solucao.save();
@@ -136,10 +143,6 @@ exports.postNewSolucao = (req, res, next) => {
         ...req.body
     }
 
-    if (req.session.admin) {
-
-    }
-
     if (req.file) {
         fileHelper.compressImage(req.file, 700)
             .then(newPath => {
@@ -147,9 +150,10 @@ exports.postNewSolucao = (req, res, next) => {
                     .then(image => {
                         fileHelper.delete(newPath);
 
-                        new Propiedade({
+                        new Solucao({
                                 ...form,
-                                mainImage: image
+                                mainImage: image,
+                                status: 'aprovado'
                             })
                             .save()
 
@@ -170,7 +174,8 @@ exports.postNewSolucao = (req, res, next) => {
 
     } else {
         new Solucao({
-                ...form
+                ...form,
+                status: 'aprovado'
             })
             .save()
 
@@ -334,6 +339,26 @@ exports.pendenciarSolucao = (req, res, next) => {
 
         .catch(err => next(err));
 }
+
+exports.getOutrasFotos = (req, res, next) => {
+    Solucao.findOne({ _id: req.params.id })
+    .then( solucao => {
+        if(!solucao){
+            return res.redirect('/admin/solucoes')
+        }
+
+        res.render('admin/solucao/outrasfotos', {
+            pageTitle: 'Outras fotos da solução',
+            path: "admin/solucoes",
+            robotsFollow: false,
+            errorMessage: [],
+            form: false,
+            solucao
+        });
+    })
+    .catch( err => next(err, 500));
+}
+
 
 exports.deleteSolucao = (req, res, next) => {
     Solucao.findOneAndDelete({

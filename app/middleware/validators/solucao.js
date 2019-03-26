@@ -3,13 +3,35 @@ const { check, body, validationResult } = require('express-validator/check');
 exports.new = [
     // Express Validation
     [
-        body('titulo', 'Entre uma senha válida!')
+        body('nome', 'O nome da solução é inválido.')
         .isLength({
             min: 8,
-            max: 20
+            max: 30
         })
-        .withMessage('The a senha deve ter entre 8 e 20 letras!')
+        .withMessage('O nome da solução deve ter entre 8 e 30 letras.'),
+
+        body('link', 'O link da solução é inválido.')
+        .isURL()
+        .withMessage('O link da solução não parece ter formato de uma URL.')
         .trim(),
+
+        body('categoria', 'O campo categoria da solução é obrigatório'),
+        
+        body('descricao', 'A descrição da solução é inválido.')
+        .isLength({
+            min: 30
+        })
+        .withMessage('A descrição da solução deve ter no  minímo 30 letras.'),
+
+        body('image', 'Imagem inválida, por favor escolha uma imagem!')
+        .custom((value, { req }) => {
+            if (!req.file) {
+                throw new Error('Imagem inválida! Formatos aceitos: png, jpeg e jpg.')
+            }
+
+            return true;
+        })
+        .trim()
     ],
 
     //Calback Function
@@ -38,13 +60,25 @@ exports.new = [
 
 exports.edit = [
     [
-        body('titulo', 'Entre uma senha válida!')
+        body('nome', 'O nome da solução é inválido.')
         .isLength({
             min: 8,
-            max: 20
+            max: 30
         })
-        .withMessage('The a senha deve ter entre 8 e 20 letras!')
+        .withMessage('O nome da solução deve ter entre 8 e 30 letras.'),
+
+        body('link', 'O link da solução é inválido.')
+        .isURL()
+        .withMessage('O link da solução não parece ter formato de uma URL.')
         .trim(),
+
+        body('categoria', 'O campo categoria da solução é obrigatório'),
+        
+        body('descricao', 'A descrição da solução é inválido.')
+        .isLength({
+            min: 30
+        })
+        .withMessage('A descrição da solução deve ter no  minímo 30 letras.')
     ],
 
     //Calback Function
@@ -63,6 +97,7 @@ exports.edit = [
                     },
                     user: req.body.user,
                     robotsFollow: false,
+                    solucao: {...req.body}
                 })
         } else {
             next();

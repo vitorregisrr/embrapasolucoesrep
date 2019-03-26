@@ -9,7 +9,7 @@ exports.getIndex = (req, res, next) => {
         res.render('public/home', {
             pageTitle: '',
             path: "/",
-            robotsFollow: false,
+            robotsFollow: true,
             errorMessage: [],
             solucoes
         })
@@ -21,7 +21,7 @@ exports.getSubmeter = (req, res, next) => {
     res.render('public/submeter', {
         pageTitle: '',
         path: "/",
-        robotsFollow: false,
+        robotsFollow: true,
         errorMessage: [],
         form: false
     })

@@ -27,27 +27,47 @@
                             uma solução como admnistrador. Você pode selecionar uma empresa já cadastrada ou um nome
                             fictício.</p>
                     </div>
-                    <form action="">
+                    <form action="/admin/solucao/edit" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="id" value="<%= solucao.id %>">
                         <div class="row">
                             <div class="col-12">
                                 <div class="row">
                                     <div class="col-12">
-                                        <select type="text" class="form-control selectpicker-empresa"
+                                        <select type="text" name="empresaId" class="form-control selectpicker-empresa"
                                             placeholder="Empresa">
-
+                                                <option selected value="<%= solucao.empresaId.id %>"><%= solucao.empresaId.nome %></option>
                                         </select>
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control" placeholder="Nome do software">
+                                        <input type="text" name="nome" class="form-control"
+                                            placeholder="Nome da solução" value="<%= solucao ? solucao.nome : '' %>">
                                     </div>
                                     <div class="col-md-6">
                                         <select type="text" class="form-control selectpicker" title="Categoria"
-                                            placeholder="Empresa">
-                                            <option>Software</option>
+                                            placeholder="Empresa" name="categoria">
+                                            <option
+                                                <%= solucao ? (solucao.categoria == 'Aplicativo' ? 'selected' : '') : '' %>
+                                                value="Aplicativo">Aplicativo</option>
+                                            <option
+                                                <%= solucao ? (solucao.categoria == 'Sistema' ? 'selected' : '') : '' %>
+                                                value="Sistema">Sistema</option>
+                                            <option
+                                                <%= solucao ? (solucao.categoria == 'Software' ? 'selected' : '') : '' %>
+                                                value="Software">Software</option>
+                                            <option
+                                                <%= solucao ? (solucao.categoria == 'Website' ? 'selected' : '') : '' %>
+                                                value="Website">Website</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Link até o software">
+                                        <input type="text" name="link" class="form-control"
+                                            placeholder="Link até a solução"
+                                            value="<%= solucao ? solucao.link : '' %>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea name="descricao" rows="5" class="form-control"
+                                            placeholder="Descrição da solução"><%= solucao ? solucao.descricao : '' %></textarea>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="media-upload">
@@ -58,7 +78,43 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn-main--square w-100 mt-2">Criar</button>
+                                        <div class="form-control h-auto">
+                                            <div class="responsive-table">
+                                                <table class="flat-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Imagens</td>
+                                                            <td>Ações</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="imagesTable">
+                                                        <% for(image of solucao.images) {%>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="<%= image.url %>"
+                                                                    style="height: 100px; width: 100px; object-fit: cover">
+                                                            </td>
+                                                            <td>
+                                                                <button type="button"
+                                                                    data-image="<%= image.public_id %>"
+                                                                    class="btn btn-outline-danger"
+                                                                    onclick="removeImage(this)"><i class="fa fa-times"
+                                                                        aria-hidden="true"></i> Remover</button>
+                                                            </td>
+                                                        </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
+                                                <div class="float-right">
+                                                    <button type="button" class="btn-main" id="novaFoto"
+                                                        data-toggle="modal" data-target="#novaFotoModal"><i
+                                                            class="fa fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn-main--square w-100 mt-2">Editar</button>
                                     </div>
                                 </div>
                             </div>
@@ -68,6 +124,8 @@
             </div>
         </div>
     </main>
+    <%- include('../../includes/modals/modal-novafoto')%>
+    <%- include('../../includes/modals/modal-confirmform')%>
     <%- include('../../includes/components/footer')%>
 </body>
 

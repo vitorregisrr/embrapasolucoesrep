@@ -41,13 +41,13 @@
                                     <tbody>
                                         <% solucoes.forEach( solucao => { %>
                                         <tr>
-                                            <td> <a href="/admin/solucao/<%= solucao.codigo %>"><%= solucao.nome %></a>
+                                            <td> <a href="/admin/solucao/edit/<%= solucao.codigo %>"><%= solucao.nome %></a>
                                             </td>
                                             <td> <a
-                                                    href="/admin/empresa/<%= solucao.empresaId ? solucao.empresaId.id : '' %>"><%= solucao.empresaId ? solucao.empresaId.nome : '' %></a>
+                                                    href="/admin/empresa/<%= solucao.empresaId ? solucao.empresaId.id : '' %>"><%= solucao.empresaId ? solucao.empresaId.nome : 'Não especificada ou excluída' %></a>
                                             </td>
                                             <td>
-                                                <a href="/admin/solucao/<%= solucao.codigo %>" role="button" class="acao" data-toggle="tooltip"
+                                                <a href="/admin/solucao/edit/<%= solucao.codigo %>" role="button" class="acao" data-toggle="tooltip"
                                                     data-placement="bottom" title="Analisar"><i
                                                         class="fa fa-eye icon"></i></a>
                                                 <form data-confirm="true" action="/admin/solucao/aprovar" class="d-inline-block"

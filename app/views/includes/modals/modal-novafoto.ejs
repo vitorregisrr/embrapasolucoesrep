@@ -9,15 +9,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="upload_media">
-                    <h4 class="inner-title">Selecione a foto</h4>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="img-submit">
-                                <input type="file" id="inputImage" />
-                            </div>
-                        </div>
-                    </div>
+                <div class="media-upload">
+                    <label for="image" class="btn-main--outline media-upload__label">Selecionar
+                        imagem</label>
+                    <input type="file" class="media-upload__input" name="image" id="image">
+                    <p class="media-upload__text">Nenhuma imagem selecionada</p>
                 </div>
                 <p id="uploadMessage" style="text-transform: none;" class="alert alert-info">Seleciona uma imagem e
                     espere a janela fechar.</p>
@@ -26,12 +22,12 @@
     </div>
 </div>
 
-<input type="hidden" value="<%= prop._id %>" id="inputId">
+<input type="hidden" value="<%= solucao._id %>" id="inputId">
 <input type="hidden" value="<%= csrfToken %>" id="csurfToken">
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const inputImage = document.getElementById('inputImage');
+        const inputImage = document.getElementById('image');
         const id = document.getElementById('inputId').value;
         const csurfToken = document.getElementById('csurfToken').value;
         const box = document.getElementById('uploadMessage');
@@ -70,7 +66,7 @@
 
             setUploadMessage('uploading');
 
-            fetch('/api/propiedade/novafoto', {
+            fetch('/api/solucao/novafoto', {
                 method: 'POST',
                 body: formData
             }).then(
@@ -85,13 +81,10 @@
                     `
                 <tr>
                     <td>
-                        <div class="property-text">
-                            <img src="${image.url}"
-                            style="height: 100px; width: 100px; object-fit: cover">
-                        </div>
+                        <img src="${image.url}" style="height: 100px; width: 100px; object-fit: cover">
                     </td>
                         <td>
-                            <span><button type="button" data-image="${image.public_id}" onclick="removeImage(this)"><i class="fa fa-times" aria-hidden="true"></i> Remover</button></span>
+                          <button type="button" class="btn btn-outline-danger" data-image="${image.public_id}" onclick="removeImage(this)"><i class="fa fa-times" aria-hidden="true"></i> Remover</button>
                         </td>
                 </tr> 
             `
@@ -114,16 +107,16 @@
     const removeImage = (btn) => {
 
         const csurfToken = document.getElementById('csurfToken').value;
-        const propId = document.getElementById('inputId').value;
+        const solucaoId = document.getElementById('inputId').value;
         const imageId = $(btn).attr('data-image');
 
         var formData = new FormData();
         formData.append('imageId', imageId);
-        formData.append('propId', propId);
+        formData.append('solucaoId', solucaoId);
         formData.append('_csrf', csurfToken);
 
 
-        fetch('/api/propiedade/removerfoto', {
+        fetch('/api/solucao/removerfoto', {
                 method: 'POST',
                 headers: {
                     "csrf-token": csurfToken
@@ -135,13 +128,11 @@
                 response => response.json()
 
             ).then(success => {
-                console.log(success)
                 $(btn).closest('tr').remove();
 
             }).catch(
                 error => {
                     alert('Houve um erro ao apagar a imagem, reinciie a página e tente novamente!');
-                    console.log(error);
                 }
             );
     }

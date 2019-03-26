@@ -12,7 +12,7 @@ exports.getSolucao = (req, res, next) => {
         return res.render('public/solucao', {
             pageTitle: '',
             path: "/solucao",
-            robotsFollow: false,
+            robotsFollow: true,
             errorMessage: [],
             form: false,
             solucao
@@ -25,7 +25,7 @@ exports.getSolicitacao = (req, res, next) => {
     res.render('public/solicitacao', {
         pageTitle: '',
         path: "/solicitacao",
-        robotsFollow: false,
+        robotsFollow: true,
         errorMessage: [],
         form: false
     })
@@ -35,7 +35,7 @@ exports.postSolicitacao = (req, res, next) => {
     res.render('public/solicitacao', {
         pageTitle: '',
         path: "/solicitacao",
-        robotsFollow: false,
+        robotsFollow: true,
         errorMessage: [],
         form: false
     })

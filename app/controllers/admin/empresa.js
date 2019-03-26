@@ -47,7 +47,7 @@ exports.getSolicitacoes = (req, res, next) => {
         .then(empresas => {
             res.render('admin/empresa/solicitacoes', {
                 pageTitle: 'Solicitações de Empresas',
-                path: "admin/empresas",
+                path: "admin/empresas/solicitacoes",
                 robotsFollow: false,
                 errorMessage: [],
                 empresas,
@@ -70,7 +70,7 @@ exports.getEditEmpresa = (req, res, next) => {
 exports.getNewEmpresa = (req, res, next) => {
     res.render('admin/empresa/nova', {
         pageTitle: 'Nova empresa',
-        path: "admin/empresas",
+        path: "admin/empresas/new",
         robotsFollow: false,
         errorMessage: [],
         form: false
@@ -157,6 +157,8 @@ exports.aprovarEmpresa = (req, res, next) => {
                 res.redirect('/admin/empresas/solicitacoes')
             }
 
+            empresa.usuario = empresa.email.split('@')[0];
+            empresa.password = empresa.id;
             empresa.status = 'aprovado';
             empresa.save()
             .then( empresa => {
@@ -176,7 +178,7 @@ exports.aprovarEmpresa = (req, res, next) => {
                             <h3> Oi ${empresa.encarregado}, estamos entrando em contato porque sua solicitação de cadastro foi aceita! </h3>
                             <h4> Segue os seu login para ter acesso ao sistema e cadastrar suas soluções: </h4>
                             <p> Usuário: ${empresa.usuario} </p>
-                            <p> Senha: ${ empresa.senha }</p>
+                            <p> Senha: ${ empresa.password }</p>
                             <h4> Agora basta acessar nosso site, clicar em tenho uma conta e fazer o login! Qualquer dúvida estamos a disposição :) </h4>
                         `
                     })
@@ -212,4 +214,23 @@ exports.rejeitarEmpresa = (req, res, next) => {
         })
 
         .catch(err => next(err));
+}
+
+exports.getByRegex = (req, res, next) => {
+    const text = req.query.text;
+    Empresa.find({
+            nome: {
+                $regex: text,
+                $options: 'i'
+            },
+            status: 'aprovado'
+        })
+        .select('nome id codigo')
+        .then(empresas => {
+            return res.status(200).json({empresas});
+        })
+        .catch(err =>{
+            res.status(500).json(JSON.stringify([]));
+            console.log(err)
+        })
 }

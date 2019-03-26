@@ -42,9 +42,9 @@ router.get('/empresa', isAuth.empresa, setLocals, empresaCtrl.empresa.getSolucoe
     router.get('/empresa/avaliacoes/solicitacoes', isAuth.empresa, setLocals, empresaCtrl.empresa.getSolicitacoes);
 
     //DELETE 
-    router.post('/empresa/avaliacao/rejeitar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.deleteAvaliacao);   
+    router.post('/empresa/avaliacao/rejeitar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.aprovarAvaliacao);   
     //ACCEPT 
-    router.post('/empresa/avaliacao/aprovar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.acceptAvaliacao);   
+    router.post('/empresa/avaliacao/aprovar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.rejeitarAvaliacao);   
 
 
 module.exports = router;

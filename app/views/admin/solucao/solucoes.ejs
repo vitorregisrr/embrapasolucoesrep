@@ -39,10 +39,10 @@
                                     <tbody>
                                         <% solucoes.forEach( solucao => { %>
                                         <tr>
-                                            <td> <a href=""><%= solucao.nome %></a></td>
-                                            <td> <a href=""><%= solucao.empresaId.nome %></a> </td>
+                                            <td> <a href="/admin/solucao/edit/<%= solucao.codigo %>"><%= solucao.nome %></a></td>
+                                            <td> <a href="<%= solucao.empresaId ? '/admin/empresa/:empresa.id' : '' %>"><%= solucao.empresaId ? solucao.empresaId.nome : 'Não especificada ou excluída' %></a> </td>
                                             <td>
-                                                <a href="/admin/solucao/<%= solucao.codigo %>" role="button" class="acao" data-toggle="tooltip"
+                                                <a href="/admin/solucao/edit/<%= solucao.codigo %>" role="button" class="acao" data-toggle="tooltip"
                                                     data-placement="bottom" title="Analisar">
                                                     <i class="fa fa-eye icon"></i></a>
                                                 <form data-confirm="true" action="/admin/solucao/pendenciar" class="d-inline-block" method="POST" data-confirm="true"> 

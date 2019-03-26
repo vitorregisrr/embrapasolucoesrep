@@ -658,6 +658,8 @@ select.form-control, .selectpicker-button {
     padding: 5px 0 5px 20px;
     font-weight: 400;
     color: #535353; }
+    .admin-nav__list__item.active {
+      color: #5b7f2e; }
     .admin-nav__list__item a {
       color: inherit; }
     .admin-nav__list__item .fa {
