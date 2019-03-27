@@ -75,12 +75,14 @@
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <option
-                                                <%= form ? (form.values.status == 'pendente' ? 'selected' : '') : '' %>
-                                                value="pendente">Pendente</option>
-                                            <option
-                                                <%= form ? (form.values.status == 'rejeitado' ? 'selected' : '') : '' %>
-                                                value="rejeitado">Rejeitado</option>
+                                            <select name="status" id="status" class="selectpicker" title="Status">
+                                                <option
+                                                    <%= form ? (form.values.status == 'pendente' ? 'selected' : '') : '' %>
+                                                    value="pendente">Pendente</option>
+                                                <option
+                                                    <%= form ? (form.values.status == 'rejeitado' ? 'selected' : '') : '' %>
+                                                    value="rejeitado">Rejeitado</option>
+                                            </select>
                                         </div>
                                         <div class="col-12">
                                             <button class="btn-main--square float-right mt-2">Filtrar</button>
