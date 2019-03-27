@@ -1,11 +1,15 @@
 const Solucao = require('../../models/solucao'),
     Empresa = require('../../models/empresa'),
     Avaliacao = require('../../models/avaliacao'),
-    transporter = require('../../util/email-transporter')();
+    transporter = require('../../util/email-transporter')(),
+    queryHelper = require('../../util/query-filter');
 
 exports.getEmpresas = (req, res, next) => {
+    const query = queryHelper.empresa(req);
+    query.status = 'aprovado';
+
     Empresa.find({
-            status: 'aprovado'
+            ...query
         })
         .then(empresas => {
             res.render('admin/empresa/empresas', {
@@ -14,7 +18,7 @@ exports.getEmpresas = (req, res, next) => {
                 robotsFollow: false,
                 errorMessage: [],
                 empresas,
-                form: false
+                form: { values : req.query }
             });
         })
         .catch(err => next(err, 500))
@@ -41,8 +45,14 @@ exports.getEmpresa = (req, res, next) => {
 }
 
 exports.getSolicitacoes = (req, res, next) => {
+    const query = queryHelper.empresa(req);
+    query.status = 'pendente';
+    if (req.query.status == 'rejeitado') {
+        query.status = 'rejeitado';
+    }
+
     Empresa.find({
-            status: 'pendente'
+            ...query
         })
         .then(empresas => {
             res.render('admin/empresa/solicitacoes', {
@@ -51,7 +61,7 @@ exports.getSolicitacoes = (req, res, next) => {
                 robotsFollow: false,
                 errorMessage: [],
                 empresas,
-                form: false
+                form: { values : req.query }
             });
         })
         .catch(err => next(err, 500))
@@ -233,4 +243,24 @@ exports.getByRegex = (req, res, next) => {
             res.status(500).json(JSON.stringify([]));
             console.log(err)
         })
+}
+
+
+exports.pendenciarEmpresa = (req, res, next) => {
+
+    Empresa.findOne({
+            _id: req.body.id
+        })
+        .then(empresa => {
+            if (!empresa) {
+                res.redirect('/admin/empresas/solicitacoes')
+            }
+
+            empresa.status = 'pendente';
+            empresa.save()
+            .then( empresa => res.redirect('/admin/empresas/solicitacoes') )
+            .catch( err => next(err, 500))
+        })
+
+        .catch(err => next(err));
 }

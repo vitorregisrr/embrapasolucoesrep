@@ -1,11 +1,15 @@
 const Solucao = require('../../models/solucao'),
     Empresa = require('../../models/empresa'),
     Avaliacao = require('../../models/avaliacao'),
-    cloudinary = require('../../util/cloudinary');
+    cloudinary = require('../../util/cloudinary'),
+    fileHelper = require('../../util/file-helper'),
+    queryHelper = require('../../util/query-filter');
 
 exports.getSolucoes = (req, res, next) => {
+    const query = queryHelper.solucao(req);
+    query.status = 'aprovado';
     Solucao.find({
-            status: 'aprovado'
+            ...query
         })
         .populate('empresaId')
         .sort({
@@ -18,15 +22,20 @@ exports.getSolucoes = (req, res, next) => {
                 robotsFollow: false,
                 errorMessage: [],
                 solucoes,
-                form: false
+                form: { values : req.query }
             });
         })
         .catch(err => next(err, 500))
 }
 
 exports.getSolicitacoes = (req, res, next) => {
+    const query = queryHelper.solucao(req);
+    query.status = 'pendente';
+    if (req.query.status == 'rejeitado') {
+        query.status = 'rejeitado';
+    }
     Solucao.find({
-            status: 'pendente'
+            ...query
         })
         .populate('empresaId')
         .sort({
@@ -39,6 +48,7 @@ exports.getSolicitacoes = (req, res, next) => {
                 robotsFollow: false,
                 errorMessage: [],
                 solucoes: solucoes.filter(solucao => solucao.empresaId ? solucao.empresaId.status != 'pendente' : true),
+                form: { values : req.query }
             });
         })
         .catch(err => next(err, 500))
@@ -309,7 +319,7 @@ exports.rejeitarSolucao = (req, res, next) => {
         })
         .then(solucao => {
             if (!solucao) {
-                res.redirect('/admin/solucaos/solicitacoes')
+                res.redirect('/admin/solucoes/solicitacoes')
             }
 
             solucao.status = 'rejeitado';
@@ -328,7 +338,7 @@ exports.pendenciarSolucao = (req, res, next) => {
         })
         .then(solucao => {
             if (!solucao) {
-                res.redirect('/admin/solucaos/solicitacoes')
+                res.redirect('/admin/solucoes/solicitacoes')
             }
 
             solucao.status = 'pendente';
@@ -385,4 +395,24 @@ exports.deleteSolucao = (req, res, next) => {
         })
 
         .catch(err => next(err));
+}
+
+
+exports.getByRegex = (req, res, next) => {
+    const text = req.query.text;
+    Solucao.find({
+            nome: {
+                $regex: text,
+                $options: 'i'
+            },
+            status: 'aprovado'
+        })
+        .select('nome id codigo')
+        .then(solucoes => {
+            return res.status(200).json({solucoes});
+        })
+        .catch(err =>{
+            res.status(500).json(JSON.stringify([]));
+            console.log(err)
+        })
 }

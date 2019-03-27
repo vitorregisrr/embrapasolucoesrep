@@ -34,7 +34,7 @@
     outline: none;
     min-height: 45px;
     box-shadow: 1px 1px 21px rgba(0, 0, 0, 0.032);
-    color: rgb(163, 163, 163);
+    color: rgb(133, 133, 133);
     margin: 5px 0;
     padding: 0 25px;
 
@@ -64,7 +64,7 @@ select.form-control, .selectpicker-button {
     box-shadow: 1px 1px 21px rgba(0, 0, 0, 0.032);
     border-radius: 4px;
     background-color: #fff;
-    color: rgb(163, 163, 163);
+    color: rgb(133, 133, 133);
 
     @extend %dflex;
     justify-content: center;

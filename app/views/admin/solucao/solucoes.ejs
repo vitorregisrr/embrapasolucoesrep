@@ -21,14 +21,69 @@
                     <%- include('../../includes/components/adminpanel') %>
                 </div>
                 <div class="col-lg-8">
-                    <div class="admin-wrap">
-                        <h3 class="inner-title text-left">Ver Soluções</h3>
-                        <p class="form-info text-left"><i class="fa fa-info-circle pr-2" area-hidden="true"></i>Veja
-                            todas as soluções que já foram aprovadas e estão sendo exibidas no site.</p>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="admin-wrap">
+                                <h3 class="inner-title text-left">Ver Soluções</h3>
+                                <p class="form-info text-left"><i class="fa fa-info-circle pr-2"
+                                        area-hidden="true"></i>Veja
+                                    todas as soluções que já foram aprovadas e estão sendo exibidas no site.</p>
+                            </div>
+                        </div>
+                        <div class="col-4 pt-4">
+                            <div class="btn-main float-right" data-toggle="collapse" href="#filtros" role="button"
+                                aria-expanded="false"> <i class="fa fa-filter"></i> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 pt-2">
+                            <div class="collapse" id="filtros">
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" name="nome" class="form-control"
+                                                placeholder="Nome da solução" maxLength="25"
+                                                value="<%= form ? form.values.nome : '' %>">
+                                        </div>
+                                        <div class="col-6">
+                                            <select type="text" name="empresaId"
+                                                class="form-control selectpicker-empresa" placeholder="Empresa">
+
+                                            </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="number" name="codigo" class="form-control"
+                                                placeholder="Código da solução"
+                                                value="<%= form ? form.values.codigo : '' %>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select type="text" class="form-control selectpicker" title="Categoria"
+                                                placeholder="Empresa" name="categoria">
+                                                <option
+                                                    <%= form ? (form.values.categoria_solucao == 'Aplicativo' ? 'selected' : '') : '' %>
+                                                    value="Aplicativo">Aplicativo</option>
+                                                <option
+                                                    <%= form ? (form.values.categoria_solucao == 'Sistema' ? 'selected' : '') : '' %>
+                                                    value="Sistema">Sistema</option>
+                                                <option
+                                                    <%= form ? (form.values.categoria_solucao == 'Software' ? 'selected' : '') : '' %>
+                                                    value="Software">Software</option>
+                                                <option
+                                                    <%= form ? (form.values.categoria_solucao == 'Website' ? 'selected' : '') : '' %>
+                                                    value="Website">Website</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn-main--square float-right mt-2">Filtrar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                        <% if( solucoes.length > 0 ) {%>
+                            <% if( solucoes.length > 0 ) {%>
                             <div class="responsive-table">
                                 <table class="flat-table">
                                     <thead>
@@ -39,16 +94,24 @@
                                     <tbody>
                                         <% solucoes.forEach( solucao => { %>
                                         <tr>
-                                            <td> <a href="/admin/solucao/edit/<%= solucao.codigo %>"><%= solucao.nome %></a></td>
-                                            <td> <a href="<%= solucao.empresaId ? '/admin/empresa/:empresa.id' : '' %>"><%= solucao.empresaId ? solucao.empresaId.nome : 'Não especificada ou excluída' %></a> </td>
+                                            <td> <a
+                                                    href="/admin/solucao/edit/<%= solucao.codigo %>"><%= solucao.nome %></a>
+                                            </td>
+                                            <td> <a
+                                                    href="<%= solucao.empresaId ? '/admin/empresa/:empresa.id' : '' %>"><%= solucao.empresaId ? solucao.empresaId.nome : 'Não especificada ou excluída' %></a>
+                                            </td>
                                             <td>
-                                                <a href="/admin/solucao/edit/<%= solucao.codigo %>" role="button" class="acao" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Analisar">
+                                                <a href="/admin/solucao/edit/<%= solucao.codigo %>" role="button"
+                                                    class="acao" data-toggle="tooltip" data-placement="bottom"
+                                                    title="Analisar">
                                                     <i class="fa fa-eye icon"></i></a>
-                                                <form data-confirm="true" action="/admin/solucao/pendenciar" class="d-inline-block" method="POST" data-confirm="true"> 
+                                                <form data-confirm="true" action="/admin/solucao/pendenciar"
+                                                    class="d-inline-block" method="POST" data-confirm="true">
                                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <input type="hidden" name="id" value="<%= solucao.id %>">
-                                                    <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom" title="Pendenciar"><i class="fa fa-ban icon warning"></i></button>
+                                                    <button type="submit" class="acao" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Pendenciar"><i
+                                                            class="fa fa-ban icon warning"></i></button>
                                                 </form>
                                                 </a>
                                             </td>
@@ -58,7 +121,7 @@
                                 </table>
                             </div>
                             <% } else { %>
-                                <h3 class="inner-title">Nenhuma solução encontrada.</h3>
+                            <h3 class="inner-title">Nenhuma solução encontrada.</h3>
                             <% } %>
                         </div>
                     </div>
@@ -67,6 +130,7 @@
         </div>
     </main>
 
+    <%- include('../../includes/modals/modal-confirmform')%>
     <%- include('../../includes/components/footer')%>
 </body>
 

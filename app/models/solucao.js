@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const mongooseAutoIncrement = require('mongoose-auto-increment');
 const mongoURI = require('../util/mongo_URI');
+const Avaliacao = require('../models/avaliacao');
 const connection = mongoose.createConnection(mongoURI, {
     useNewUrlParser: true
 });
@@ -40,7 +41,8 @@ const Solucao = new Schema({
 
     rating: {
         type: Number,
-        required: false
+        required: false,
+        default: 5
     },
 
     mainImage: {
@@ -60,6 +62,24 @@ const Solucao = new Schema({
     }
 });
 
+Solucao.methods.updateRating = function() {
+    Avaliacao.find({ solucaoId : this , status: 'aprovado'})
+    .select('rating')
+    .then( avaliacoes => {
+        const ratings = avaliacoes.map( avaliacao => avaliacao.rating);
+        const average = ratings.reduce(function (sum, value) {
+            return sum + value;
+        }, 0) / ratings.length;
+       
+        this.rating = Math.round(average);
+        return this.save();
+    
+    })
+    .catch( err => {
+        console.log(err)
+    })
+}
+
 mongooseAutoIncrement.initialize(connection, {
     useNewUrlParser: true
 });
@@ -70,5 +90,6 @@ Solucao.plugin(mongooseAutoIncrement.plugin, {
     startAt: 100,
     incrementBy: 4
 });
+
 
 module.exports = mongoose.model('Solucao', Solucao);

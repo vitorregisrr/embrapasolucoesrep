@@ -21,14 +21,66 @@
                     <%- include('../../includes/components/adminpanel') %>
                 </div>
                 <div class="col-lg-8">
-                    <div class="admin-wrap">
-                        <h3 class="inner-title text-left">Solicitações de empresas</h3>
-                        <p class="form-info text-left"><i class="fa fa-info-circle pr-2" area-hidden="true"></i>Gerencie
-                            as solicitações que empresas fizeram para se cadastrar. Quando aceitas, recebem um código pelo email fornecido para prosseguir com o cadastro.</p>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="admin-wrap">
+                                <h3 class="inner-title text-left">Solicitações de empresas</h3>
+                                <p class="form-info text-left"><i class="fa fa-info-circle pr-2"
+                                        area-hidden="true"></i>Gerencie
+                                    as solicitações que empresas fizeram para se cadastrar. Quando aceitas, recebem um
+                                    código
+                                    pelo email fornecido para prosseguir com o cadastro.</p>
+                            </div>
+                        </div>
+                        <div class="col-4 pt-4">
+                            <div class="btn-main float-right" data-toggle="collapse" href="#filtros" role="button"
+                                aria-expanded="false"> <i class="fa fa-filter"></i> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 pt-2">
+                            <div class="collapse" id="filtros">
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" name="nome" class="form-control" placeholder="Nome"
+                                                maxLength="25" value="<%= form ? form.values.nome : '' %>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="encarregado" class="form-control"
+                                                placeholder="Encarregado" maxLength="25"
+                                                value="<%= form ? form.values.encarregado : '' %>">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" name="email" class="form-control" placeholder="E-mail"
+                                                maxLength="25" value="<%= form ? form.values.email : '' %>">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" name="telefone" class="form-control"
+                                                placeholder="Telefone" maxLength="25"
+                                                value="<%= form ? form.values.telefone : '' %>">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <select name="status" id="status" class="selectpicker" title="Status">
+                                                <option
+                                                    <%= form ? (form.values.status == 'pendente' ? 'selected' : '') : '' %>
+                                                    value="pendente">Pendente</option>
+                                                <option
+                                                    <%= form ? (form.values.status == 'rejeitado' ? 'selected' : '') : '' %>
+                                                    value="rejeitado">Rejeitado</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn-main--square float-right mt-2">Filtrar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                        <% if( empresas.length > 0 ) { %>
+                            <% if( empresas.length > 0 ) { %>
                             <div class="responsive-table">
                                 <table class="flat-table">
                                     <thead>
@@ -45,17 +97,27 @@
                                             <td><%= empresa.email %></td>
                                             <td><%= empresa.telefone %></td>
                                             <td>
-                                                <a href="/admin/empresa/<%= empresa.id %>" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Analisar"><i class="fa fa-eye icon"></i></a>
-                                                <form action="/admin/empresa/aprovar" data-confirm="true" class="d-inline-block" method="POST" data-confirm="true"> 
+                                                <a href="/admin/empresa/<%= empresa.id %>" role="button" class="acao"
+                                                    data-toggle="tooltip" data-placement="bottom" title="Analisar"><i
+                                                        class="fa fa-eye icon"></i></a>
+                                                <form action="/admin/empresa/aprovar" data-confirm="true"
+                                                    class="d-inline-block" method="POST" data-confirm="true">
                                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <input type="hidden" name="id" value="<%= empresa.id %>">
-                                                    <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom" title="Aceitar"><i class="fa fa-check icon success"></i></button>
+                                                    <button type="submit" class="acao" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Aceitar"><i
+                                                            class="fa fa-check icon success"></i></button>
                                                 </form>
-                                                <form action="/admin/empresa/rejeitar" data-confirm="true" class="d-inline-block" method="POST" data-confirm="true"> 
+                                                <% if( empresa.status != 'rejeitado') { %>
+                                                <form action="/admin/empresa/rejeitar" data-confirm="true"
+                                                    class="d-inline-block" method="POST" data-confirm="true">
                                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <input type="hidden" name="id" value="<%= empresa.id %>">
-                                                    <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom" title="Rejeitar"><i class="fa fa-ban icon danger"></i></button>
+                                                    <button type="submit" class="acao" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Rejeitar"><i
+                                                            class="fa fa-ban icon danger"></i></button>
                                                 </form>
+                                                <% } %>
                                             </td>
                                         </tr>
                                         <% }) %>
@@ -63,7 +125,7 @@
                                 </table>
                             </div>
                             <% } else { %>
-                                <h3 class="inner-title">Nenhuma solicitação encontrada.</h3>
+                            <h3 class="inner-title">Nenhuma solicitação encontrada.</h3>
                             <% } %>
                         </div>
                     </div>
@@ -71,6 +133,7 @@
             </div>
         </div>
     </main>
+    <%- include('../../includes/modals/modal-confirmform')%>
     <%- include('../../includes/components/footer')%>
 </body>
 

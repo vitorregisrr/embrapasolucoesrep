@@ -28,7 +28,7 @@
                             fornecido um código para a empresa se cadastrar escolhendo
                             seu usuário e senha através do site.</p>
                     </div>
-                    <form action="/admin/empresas/new" method="POST">
+                    <form action="/admin/empresas/new" method="POST" enctype="multipart/form-data">
                         <%- include('../../includes/form/errorBox') %>
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <div class="row">

@@ -18,11 +18,22 @@ const Avaliacao = new Schema({
         required: true
     },
 
-    data: {
-        type: Date,
-        required: true
+    image: {
+        type: Object,
+        required: false,
+        default: { url : '/images/thumbs/user.jpg'}
     },
 
+    status: {
+        type: String,
+        required: true
+    },
+    
+    rating: {
+        type: Number,
+        required: true
+    },
+    
     date: {
         type: Date,
         default: Date.now()

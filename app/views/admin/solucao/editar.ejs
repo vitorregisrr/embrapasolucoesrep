@@ -21,8 +21,43 @@
                     <%- include('../../includes/components/adminpanel') %>
                 </div>
                 <div class="col-lg-8">
+                    <%  if(solucao.status == 'pendente') { %>
+                    <div class="alert alert-warning mt-2 d-flex justify-content-between" role="alert">
+                        <p>Esta solução está pendente. Você precisa tomar uma ação:</p>
+                        <div class="">
+                            <form action="/admin/solucao/aprovar" class="d-inline-block" method="POST"
+                                data-confirm="true">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="id" value="<%= solucao.id %>">
+                                <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
+                                    title="Aceitar"><i class="fa fa-check icon success"></i></button>
+                            </form>
+                            <form action="/admin/solucao/rejeitar" class="d-inline-block" method="POST"
+                                data-confirm="true">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="id" value="<%= solucao.id %>">
+                                <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
+                                    title="Rejeitar"><i class="fa fa-ban icon danger"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+                    <%  if(solucao.status == 'rejeitado') { %>
+                    <div class="alert alert-warning mt-2 d-flex justify-content-between" role="alert">
+                        <p>Esta solução foi rejeitada. Você clique no botão ao lado para aprova-la.</p>
+                        <div class="">
+                            <form action="/admin/solucao/aprovar" data-confirm="true" class="d-inline-block"
+                                method="POST" data-confirm="true">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="id" value="<%= solucao.id %>">
+                                <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
+                                    title="Aceitar"><i class="fa fa-check icon success"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
                     <div class="admin-wrap">
-                        <h3 class="inner-title text-left">Nova solução</h3>
+                        <h3 class="inner-title text-left">Editar solução</h3>
                         <p class="form-info text-left"><i class="fa fa-info-circle pr-2" area-hidden="true"></i>Crie
                             uma solução como admnistrador. Você pode selecionar uma empresa já cadastrada ou um nome
                             fictício.</p>
@@ -36,7 +71,8 @@
                                     <div class="col-12">
                                         <select type="text" name="empresaId" class="form-control selectpicker-empresa"
                                             placeholder="Empresa">
-                                                <option selected value="<%= solucao.empresaId.id %>"><%= solucao.empresaId.nome %></option>
+                                            <option selected value="<%= solucao.empresaId.id %>">
+                                                <%= solucao.empresaId.nome %></option>
                                         </select>
                                     </div>
                                     <div class="col-md-12">
@@ -62,8 +98,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <input type="text" name="link" class="form-control"
-                                            placeholder="Link até a solução"
-                                            value="<%= solucao ? solucao.link : '' %>">
+                                            placeholder="Link até a solução" value="<%= solucao ? solucao.link : '' %>">
                                     </div>
                                     <div class="col-md-12">
                                         <textarea name="descricao" rows="5" class="form-control"

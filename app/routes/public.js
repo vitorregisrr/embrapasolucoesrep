@@ -19,7 +19,7 @@ const publicCtrl = {
 router.get('/', publicCtrl.index.getIndex);
 
 //Solução
-router.get('/solucao/:solucaoCod', setLocals, publicCtrl.solucao.getSolucao);
+router.get('/solucao/:codigo', setLocals, publicCtrl.solucao.getSolucao);
 
 //Submeter
 router.get('/submeter', setLocals, publicCtrl.index.getSubmeter);
@@ -32,6 +32,6 @@ router.get('/solucao/solicitar', setLocals, publicCtrl.solucao.getSolicitacao);
 router.post('/solucao/solicitar', validators.solucao.solicitacao, publicCtrl.solucao.postSolicitacao);
 
 //Avaliação
-router.post('/solucao/avaliacao', setLocals, validators.avaliacao, publicCtrl.avaliacao.postAvaliacao);
+router.post('/solucao/avaliar', setLocals, validators.avaliacao, publicCtrl.avaliacao.postAvaliacao);
 
 module.exports = router;

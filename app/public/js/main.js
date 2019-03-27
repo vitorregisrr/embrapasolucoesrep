@@ -88,5 +88,8 @@
     theme: 'fontawesome-stars',
     readonly: true
   })
+
+  //show modals with data-show true
+  $('.modal[data-show="true"]').modal('show');
   
 })();

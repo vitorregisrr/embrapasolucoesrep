@@ -43,8 +43,7 @@
                         <article class="solucao wow fadeInUp">
                             <div class="solucao__img">
                                 <a href="/solucao/<%= solucao.codigo %>">
-                                    <img src="<%= solucao.mainImage.url %>"
-                                        alt="<%= solucao.nome %>">
+                                    <img src="<%= solucao.mainImage.url %>" alt="<%= solucao.nome %>">
                                 </a>
                                 <div class="solucao__categoria"><%= solucao.categoria %></div>
                             </div>
@@ -56,11 +55,16 @@
                                 </div>
                                 <div class="solucao__text__rating">
                                     <select class="starsrating" readonly="true">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
+                                        <option <%= solucao.rating == 1 || solucao.rating == 0 ? 'selected' : '' %>
+                                            value="1">1</option>
+                                        <option <%= solucao.rating == 2 ? 'selected' : '' %> value="2">2
+                                        </option>
+                                        <option <%= solucao.rating == 3 ? 'selected' : '' %> value="3">3
+                                        </option>
+                                        <option <%= solucao.rating == 4 ? 'selected' : '' %> value="4">4
+                                        </option>
+                                        <option <%= solucao.rating == 5 ? 'selected' : '' %> value="5">5
+                                        </option>
                                     </select>
                                 </div>
                             </div>

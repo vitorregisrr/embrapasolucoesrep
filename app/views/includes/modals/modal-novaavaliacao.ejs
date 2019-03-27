@@ -1,0 +1,70 @@
+<div class="modal fade" data-show="<%= showAvaliacao ? 'true' : 'false' %>" id="novaAvaliacaoModal" tabindex="-1" role="dialog" aria-labelledby="novaAvaliacaoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="novaAvaliacaoModalLabel">Escrever avaliação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/solucao/avaliar" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <input type="hidden" name="solucaoId" value="<%= solucao.id %>">
+                    <%- include('../../includes/form/errorBox') %>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6 p-3 pl-5">
+                                    <p class="form-description">Avaliação em estrelas: </p>
+                                </div>
+                                <div class="col-6  p-3">
+                                    <select required class="starsrating" name="rating" readonly="false">
+                                        <option <%= form ? form.values.rating == 1 ? 'selected'  : '' : '' %> value="1">
+                                            1</option>
+                                        <option <%= form ? form.values.rating == 2 ? 'selected' : '' : ''  %> value="2">
+                                            2</option>
+                                        <option <%= form ? form.values.rating == 3 ? 'selected' : '' : ''  %> value="3">
+                                            3</option>
+                                        <option <%= form ? form.values.rating == 4 ? 'selected' : '' : ''  %> value="4">
+                                            4</option>
+                                        <option <%= form ? form.values.rating == 5 ? 'selected' : '' : ''  %> value="5">
+                                            5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <input required type="text" name="titulo" class="form-control"
+                                        placeholder="Título da avaliação" maxLength="25"
+                                        value="<%= form ? form.values.titulo : '' %>">
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <textarea required name="descricao" placeholder="Como foi sua experiência com esta solução?"
+                                        rows="5"
+                                        class="form-control"><%= form ? form.values.descricao : '' %></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <input required type="text" name="autor" class="form-control" placeholder="Nome do Autor"
+                                        value="<%= form ? form.values.autor : '' %>">
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="media-upload">
+                                        <label for="image" class="btn-main--outline media-upload__label">Foto do
+                                            autor</label>
+                                        <input type="file" class="media-upload__input" name="image" id="image">
+                                        <p class="media-upload__text">Nenhuma imagem selecionada</p>
+                                        <p><small>Opcional</small></p>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn-main--square w-100 mt-2">Criar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

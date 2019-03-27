@@ -46,6 +46,9 @@ router.get('/admin', isAuth.admin, setLocals, adminCtrl.empresa.getSolicitacoes)
         //REMOVER FOTO DO SOLUCAO
         router.post('/api/solucao/removerfoto', isAuth.admin, adminCtrl.solucao.removeSolucaoImage);
 
+        //API GET BY REGEX
+        router.get('/api/solucao/searchbyajax', isAuth.admin, adminCtrl.solucao.getByRegex)
+
 
 //EMPRESA
     router.get('/admin/empresas', isAuth.admin, setLocals, adminCtrl.empresa.getEmpresas);
@@ -66,16 +69,21 @@ router.get('/admin', isAuth.admin, setLocals, adminCtrl.empresa.getSolicitacoes)
     router.post('/admin/empresa/aprovar', isAuth.admin, setLocals, adminCtrl.empresa.aprovarEmpresa);   
     //REJEITAR 
     router.post('/admin/empresa/rejeitar', isAuth.admin, setLocals, adminCtrl.empresa.rejeitarEmpresa);   
+    //PENDENCIAR 
+    router.post('/admin/empresa/pendenciar', isAuth.admin, setLocals, adminCtrl.empresa.pendenciarEmpresa);   
     //API GET BY REGEX
-    router.get('/api/empresa/searchbyajax', isAuth.admin, setLocals, adminCtrl.empresa.getByRegex)
+    router.get('/api/empresa/searchbyajax', isAuth.admin, adminCtrl.empresa.getByRegex)
     
 //AVALIACOES
     router.get('/admin/avaliacoes', isAuth.admin, setLocals, adminCtrl.avaliacao.getAvaliacoes);
     router.get('/admin/avaliacoes/solicitacoes', isAuth.admin, setLocals, adminCtrl.avaliacao.getSolicitacoes);
-    //DELETE 
+    //APROVAR 
     router.post('/admin/avaliacao/aprovar', isAuth.admin, setLocals, adminCtrl.avaliacao.aprovarAvaliacao);   
-    //ACCEPT 
-    router.post('/admin/avaliacao/rejeitar', isAuth.admin, setLocals, adminCtrl.avaliacao.rejeitarAvaliacao);   
+    //REJEITAR 
+    router.post('/admin/avaliacao/rejeitar', isAuth.admin, setLocals, adminCtrl.avaliacao.rejeitarAvaliacao);
+    //PENDENCIAR 
+    router.post('/admin/avaliacao/pendenciar', isAuth.admin, setLocals, adminCtrl.avaliacao.pendenciarAvaliacao);   
+
 
 
 module.exports = router;

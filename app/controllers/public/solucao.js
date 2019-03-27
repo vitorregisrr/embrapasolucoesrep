@@ -1,24 +1,40 @@
 const Solucao = require('../../models/solucao'),
     Empresa = require('../../models/empresa'),
     Avaliacao = require('../../models/avaliacao');
-    
-exports.getSolucao = (req, res, next) => {
-    Solucao.findOne({ codigo:req.params.codigo})
-    .then( solucao => {
-        if( solucao.status != 'aprovado' && !req.session.admin){
-            return res.redirect('/')
-        }
 
-        return res.render('public/solucao', {
-            pageTitle: '',
-            path: "/solucao",
-            robotsFollow: true,
-            errorMessage: [],
-            form: false,
-            solucao
+exports.getSolucao = (req, res, next) => {
+    Solucao.findOne({
+            codigo: req.params.codigo
         })
-    })
-    .catch( err => next(err, 500))
+        .then(solucao => {
+            if (!solucao) {
+                res.redirect('/')
+            }
+
+            if (solucao.status != 'aprovado' && !req.session.admin) {
+                return res.redirect('/')
+            }
+
+            Avaliacao.find({
+                    solucaoId: solucao,
+                    status: 'aprovado'
+                })
+                .then(avaliacoes => {
+                    return res.render('public/solucao', {
+                        pageTitle: '',
+                        path: "/solucao",
+                        robotsFollow: true,
+                        errorMessage: [],
+                        form: false,
+                        solucao,
+                        avaliacoes,
+                        showAvaliacao: false,
+                        showSuccess: false
+                    })
+                })
+                .catch(err => next(err, 500));
+        })
+        .catch(err => next(err, 500))
 }
 
 exports.getSolicitacao = (req, res, next) => {

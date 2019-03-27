@@ -39,7 +39,7 @@
                 @include transition(0.2s);
 
                 &:hover {
-                    color: $main-black;
+                    transform: scale(1.03);
                 }
             }
 

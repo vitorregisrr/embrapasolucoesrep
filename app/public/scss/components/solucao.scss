@@ -4,6 +4,11 @@
     border-radius: 4px;
     margin: 20px 0;
     box-shadow: 2.485px 2.485px 21px 0px rgba(0, 0, 0, 0.048);
+    @include transition(0.2s);
+
+    &:hover{
+        transform: scale(1.02);
+    }
 
     &__img {
         height: 40%;

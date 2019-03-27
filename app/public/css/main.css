@@ -281,7 +281,7 @@ a {
       -o-transition: all 0.2s ease-in-out;
       transition: all 0.2s ease-in-out; }
       #main-nav .navbar-nav li > a:hover {
-        color: #444444; }
+        transform: scale(1.03); }
     #main-nav .navbar-nav li.nav-btn {
       margin-left: 0px; }
       #main-nav .navbar-nav li.nav-btn > a {
@@ -343,7 +343,14 @@ a {
   background: #fff;
   border-radius: 4px;
   margin: 20px 0;
-  box-shadow: 2.485px 2.485px 21px 0px rgba(0, 0, 0, 0.048); }
+  box-shadow: 2.485px 2.485px 21px 0px rgba(0, 0, 0, 0.048);
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out; }
+  .solucao:hover {
+    transform: scale(1.02); }
   .solucao__img {
     height: 40%;
     position: relative; }
@@ -404,7 +411,7 @@ a {
 .avaliacao {
   display: flex;
   min-height: 120px;
-  height: auto;
+  height: 100%;
   width: 100%;
   border-radius: 6px;
   padding: 20px 0; }
@@ -412,7 +419,9 @@ a {
     background: #fff;
     box-shadow: 1px 1px 21px rgba(0, 0, 0, 0.072);
     padding: 15px 25px;
-    border-radius: 5%; }
+    border-radius: 5%;
+    width: 100%;
+    height: 100%; }
   .avaliacao__title {
     font-weight: bold;
     color: #8fc152; }
@@ -550,7 +559,7 @@ a {
   outline: none;
   min-height: 45px;
   box-shadow: 1px 1px 21px rgba(0, 0, 0, 0.032);
-  color: #a3a3a3;
+  color: #858585;
   margin: 5px 0;
   padding: 0 25px; }
   .form-control::placeholder, .selectpicker-button::placeholder {
@@ -573,7 +582,7 @@ select.form-control, .selectpicker-button {
   box-shadow: 1px 1px 21px rgba(0, 0, 0, 0.032);
   border-radius: 4px;
   background-color: #fff;
-  color: #a3a3a3;
+  color: #858585;
   justify-content: center;
   align-items: center;
   flex-direction: column; }

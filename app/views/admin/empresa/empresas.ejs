@@ -1,6 +1,7 @@
 <%- include('../../includes/imports/head') %>
 
 </head>
+
 <body class="scrollbar-inner wow fadeIn">
     <%- include('../../includes/components/mainheader') %>
 
@@ -20,10 +21,51 @@
                     <%- include('../../includes/components/adminpanel') %>
                 </div>
                 <div class="col-lg-8">
-                    <div class="admin-wrap">
-                        <h3 class="inner-title text-left">Ver empresas</h3>
-                        <p class="form-info text-left"><i class="fa fa-info-circle pr-2" area-hidden="true"></i>Veja toda as empresas que já tiveram sua solicitação de cadastro aceito. Você pode entrar no perfil dela
-                        para ver informações mais detalhadas sobre ela.</p>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="admin-wrap">
+                                <h3 class="inner-title text-left">Ver empresas</h3>
+                                <p class="form-info text-left"><i class="fa fa-info-circle pr-2"
+                                        area-hidden="true"></i>Veja toda as empresas que já tiveram sua solicitação de
+                                    cadastro aceito. Você pode entrar no perfil dela
+                                    para ver informações mais detalhadas sobre ela.</p>
+                            </div>
+                        </div>
+                        <div class="col-4 pt-4">
+                            <div class="btn-main float-right" data-toggle="collapse" href="#filtros" role="button"
+                                aria-expanded="false"> <i class="fa fa-filter"></i> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 pt-2">
+                            <div class="collapse" id="filtros">
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" name="nome" class="form-control" placeholder="Nome"
+                                                maxLength="25" value="<%= form ? form.values.nome : '' %>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="encarregado" class="form-control"
+                                                placeholder="Encarregado" maxLength="25"
+                                                value="<%= form ? form.values.encarregado : '' %>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="email" class="form-control" placeholder="E-mail"
+                                                maxLength="25" value="<%= form ? form.values.email : '' %>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="telefone" class="form-control"
+                                                placeholder="Telefone" maxLength="25"
+                                                value="<%= form ? form.values.telefone : '' %>">
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn-main--square float-right mt-2">Filtrar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -44,11 +86,16 @@
                                             <td><%= empresa.email %></td>
                                             <td><%= empresa.telefone %></td>
                                             <td>
-                                                <a href="/admin/empresa/<%= empresa.id %>" role="button" class="acao" data-toggle="tooltip" data-placement="bottom" title="Ver"><i class="fa fa-eye icon"></i></a>
-                                                <form action="/admin/empresa/delete" class="d-inline-block" method="POST" data-confirm="true"> 
+                                                <a href="/admin/empresa/<%= empresa.id %>" role="button" class="acao"
+                                                    data-toggle="tooltip" data-placement="bottom" title="Ver"><i
+                                                        class="fa fa-eye icon"></i></a>
+                                                <form action="/admin/empresa/pendenciar" class="d-inline-block"
+                                                    method="POST" data-confirm="true">
                                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <input type="hidden" name="id" value="<%= empresa.id %>">
-                                                    <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom" title="Apagar"><i class="fa fa-trash icon danger"></i></button>
+                                                    <button type="submit" class="acao" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Pendenciar"><i
+                                                            class="fa fa-ban icon warning"></i></button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -58,7 +105,7 @@
                             </div>
                         </div>
                         <% }else{ %>
-                            <h3 class="inner-title">Nenhuma empresa encontrada.</h3>
+                        <h3 class="inner-title">Nenhuma empresa encontrada.</h3>
                         <% } %>
                     </div>
                 </div>
