@@ -30,6 +30,7 @@
                     <div class="offset-md-3"></div>
                 </div>
                 <div id="collapseGroup">
+                    <%- include('../includes/form/errorBox') %>
                     <div id="registerTab" class="collapse show">
                         <form action="/submeter" method="POST">
                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
@@ -44,45 +45,71 @@
                                             <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Preencha o
                                                 formulário com dados da empresa e da primeira solução que quer
                                                 cadastrar, nós analisaremos os dados, e se sua empresa for aprovada,
-                                                entraremos em contato com um código para prosseguir com o cadastro conta!</p>
+                                                entraremos em contato com um código para prosseguir com o cadastro
+                                                conta!</p>
                                         </div>
                                         <div class="col-12 text-left">
                                             <h3 class="form-title">Dados da empresa</h3>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" required class="form-control" name="nome" placeholder="Nome da empresa" value="<%= form ? form.values.nome : '' %>">
+                                            <input type="text" required class="form-control" name="nome"
+                                                placeholder="Nome da empresa"
+                                                value="<%= form ? form.values.nome : '' %>">
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" required class="form-control" name="email" placeholder="Email da empresa" value="<%= form ? form.values.email : '' %>">
+                                            <input type="text" required class="form-control" name="email"
+                                                placeholder="Email da empresa"
+                                                value="<%= form ? form.values.email : '' %>">
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" required class="form-control" name="telefone" placeholder="Telefone da empresa" value="<%= form ? form.values.telefone : '' %>">
+                                            <input type="text" required class="form-control" name="telefone"
+                                                placeholder="Telefone da empresa"
+                                                value="<%= form ? form.values.telefone : '' %>">
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" class="form-control" name="encarregado" placeholder="Nome do encarregado" value="<%= form ? form.values.encarregado : '' %>">
+                                            <input type="text" class="form-control" name="encarregado"
+                                                placeholder="Nome do encarregado"
+                                                value="<%= form ? form.values.encarregado : '' %>">
                                         </div>
                                         <div class="col-12 text-left">
                                             <h3 class="form-title">Dados da solução</h3>
-                                            <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Informe os dados da primeira solução que gostaria de cadastrar.
-                                            A solução não será totalmente cadastrada por enquanto, será necessário completar o cadastro caso sua empresa seja aprovada.
+                                            <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Informe os dados
+                                                da primeira solução que gostaria de cadastrar.
+                                                A solução não será totalmente cadastrada por enquanto, será necessário
+                                                completar o cadastro caso sua empresa seja aprovada.
                                             </p>
                                         </div>
                                         <div class="col-12">
-                                            <input type="text" required name="nome_solucao" class="form-control" placeholder="Nome da solução" value="<%= form ? form.values.nome_solucao : '' %>">
+                                            <input type="text" required name="nome_solucao" class="form-control"
+                                                placeholder="Nome da solução"
+                                                value="<%= form ? form.values.nome_solucao : '' %>">
                                         </div>
                                         <div class="col-md-6">
-                                            <select type="text" required class="form-control selectpicker" name="categoria_solucao" title="Categoria" placeholder="Tipo" >
-                                                <option <%= form ? (form.values.categoria_solucao == 'Aplicativo' ? 'selected' : '') : '' %> value="Aplicativo">Aplicativo</option>
-                                                <option <%= form ? (form.values.categoria_solucao == 'Sistema' ? 'selected' : '') : '' %> value="Sistema">Sistema</option>
-                                                <option <%= form ? (form.values.categoria_solucao == 'Software' ? 'selected' : '') : '' %> value="Software">Software</option>
-                                                <option <%= form ? (form.values.categoria_solucao == 'Website' ? 'selected' : '') : '' %> value="Website">Website</option>
-                                            <select>
+                                            <select type="text" required class="form-control selectpicker"
+                                                name="categoria_solucao" title="Categoria" placeholder="Tipo">
+                                                <option
+                                                    <%= form ? (form.values.categoria_solucao == 'Aplicativo' ? 'selected' : '') : '' %>
+                                                    value="Aplicativo">Aplicativo</option>
+                                                <option
+                                                    <%= form ? (form.values.categoria_solucao == 'Sistema' ? 'selected' : '') : '' %>
+                                                    value="Sistema">Sistema</option>
+                                                <option
+                                                    <%= form ? (form.values.categoria_solucao == 'Software' ? 'selected' : '') : '' %>
+                                                    value="Software">Software</option>
+                                                <option
+                                                    <%= form ? (form.values.categoria_solucao == 'Website' ? 'selected' : '') : '' %>
+                                                    value="Website">Website</option>
+                                                <select>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" required class="form-control" placeholder="Link até a solução" name="link_solucao" value="<%= form ? form.values.link_solucao : '' %>">
+                                            <input type="text" required class="form-control"
+                                                placeholder="Link até a solução" name="link_solucao"
+                                                value="<%= form ? form.values.link_solucao : '' %>">
                                         </div>
                                         <div class="col-12">
-                                            <textarea type="text" required class="form-control" rows="3" placeholder="Descrição da solução" name="descricao_solucao"><%= form ? form.values.descricao_solucao : '' %></textarea>
+                                            <textarea type="text" required class="form-control" rows="3"
+                                                placeholder="Descrição da solução"
+                                                name="descricao_solucao"><%= form ? form.values.descricao_solucao : '' %></textarea>
                                         </div>
                                         <div class="col-12">
                                             <button class="btn-main--square w-100 mt-2">Enviar</button>
@@ -94,18 +121,17 @@
                         </form>
                     </div>
                     <div id="loginTab" class="collapse">
-                        <form action="">
+                        <form action="/empresa/login" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <div class="row pt-4">
                                 <div class="offset-md-2"></div>
                                 <div class="col-12 col-md-8">
                                     <div class="row">
                                         <div class="col-12 text-left">
                                             <h3 class="form-title font-weight-bold color-main">Formulário de login</h3>
-                                            <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Preencha o
-                                                formulário com dados da empresa e da primeira solução que quer
-                                                cadastrar, nós analisaremos e enviaremos para você um código para criar
-                                                uma
-                                                conta!</p>
+                                            <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Já foi aprovado
+                                                no sistema? Faça o login como empresa para gerenciar suas soluções e
+                                                avaliações.</p>
                                         </div>
                                         <div class="col-md-5">
                                             <input type="text" class="form-control" placeholder="Usuário">

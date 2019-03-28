@@ -3,7 +3,7 @@ const Empresa = require('../../models/empresa');
 transporter = require('../../util/email-transporter')();
 
 exports.getAdminlogin = (req, res, next) => {
-    if (!req.user) {
+    if (!req.session.admin) {
         return res.render('admin/login', {
             pageTitle: 'Login',
             path: '/admin/login',
@@ -12,7 +12,20 @@ exports.getAdminlogin = (req, res, next) => {
             robotsFollow: false,
         })
     }
-    return res.redirect('/');
+    return res.redirect('/admin');
+}
+
+exports.getEmpresaLogin = (req, res, next) => {
+    if (!req.session.empresa) {
+        return res.render('empresa/login', {
+            pageTitle: 'Login',
+            path: '/admin/login',
+            form: null,
+            errorMessage: req.errors,
+            robotsFollow: false,
+        })
+    }
+    return res.redirect('/empresa');
 }
 
 exports.postLoginAdmin = (req, res, next) => {
@@ -89,6 +102,24 @@ exports.postLoginEmpresa = (req, res, next) => {
                         path: '/login',
                         pageTitle: 'Login',
                         errorMessage: ["Usuário não encontrado!"],
+                        form: {
+                            values: {
+                                email: '',
+                                password: ''
+                            },
+                            hasError: ['email']
+                        },
+                        robotsFollow: false,
+                    })
+            }
+
+            if (empresa.status != 'aprovado') {
+                return res
+                    .status(422)
+                    .render('empresa/login', {
+                        path: '/login',
+                        pageTitle: 'Login',
+                        errorMessage: ["Encontramos sua conta mas parece que ela não foi aprovada, contante o admnistrador do sistema!"],
                         form: {
                             values: {
                                 email: '',

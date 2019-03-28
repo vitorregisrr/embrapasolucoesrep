@@ -5,21 +5,43 @@ const Solucao = require('../../models/solucao'),
     queryHelper = require('../../util/query-filter');
 
 exports.getEmpresas = (req, res, next) => {
+    const currentPage = req.query.page ? parseInt(req.query.page) : 1,
+        ITEMS_PER_PAGE = 8;
+    let totalItems;
+
     const query = queryHelper.empresa(req);
     query.status = 'aprovado';
 
     Empresa.find({
             ...query
         })
-        .then(empresas => {
-            res.render('admin/empresa/empresas', {
-                pageTitle: 'Soluções',
-                path: "admin/empresas",
-                robotsFollow: false,
-                errorMessage: [],
-                empresas,
-                form: { values : req.query }
-            });
+        .countDocuments()
+        .then(num => {
+            totalItems = num;
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+            Empresa.find({
+                    ...query
+                })
+                .skip((currentPage - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE)
+                .then(empresas => {
+                    res.render('admin/empresa/empresas', {
+                        pageTitle: 'Soluções',
+                        path: "admin/empresas",
+                        robotsFollow: false,
+                        errorMessage: [],
+                        empresas,
+                        form: {
+                            values: req.query
+                        },
+                        hasNext: currentPage < totalPages,
+                        hasPrevious: currentPage > 1,
+                        totalPages,
+                        currentPage
+                    });
+                })
+                .catch(err => next(err, 500))
         })
         .catch(err => next(err, 500))
 }
@@ -29,7 +51,7 @@ exports.getEmpresa = (req, res, next) => {
             _id: req.params.id
         })
         .then(empresa => {
-            if( !empresa ){
+            if (!empresa) {
                 res.redirect('/admin/empresas')
             }
             res.render('admin/empresa/empresa', {
@@ -45,6 +67,10 @@ exports.getEmpresa = (req, res, next) => {
 }
 
 exports.getSolicitacoes = (req, res, next) => {
+    const currentPage = req.query.page ? parseInt(req.query.page) : 1,
+        ITEMS_PER_PAGE = 8;
+    let totalItems;
+
     const query = queryHelper.empresa(req);
     query.status = 'pendente';
     if (req.query.status == 'rejeitado') {
@@ -54,15 +80,33 @@ exports.getSolicitacoes = (req, res, next) => {
     Empresa.find({
             ...query
         })
-        .then(empresas => {
-            res.render('admin/empresa/solicitacoes', {
-                pageTitle: 'Solicitações de Empresas',
-                path: "admin/empresas/solicitacoes",
-                robotsFollow: false,
-                errorMessage: [],
-                empresas,
-                form: { values : req.query }
-            });
+        .countDocuments()
+        .then(num => {
+            totalItems = num;
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+            Empresa.find({
+                    ...query
+                })
+                .skip((currentPage - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE)
+                .then(empresas => {
+                    res.render('admin/empresa/solicitacoes', {
+                        pageTitle: 'Solicitações de Empresas',
+                        path: "admin/empresas/solicitacoes",
+                        robotsFollow: false,
+                        errorMessage: [],
+                        empresas,
+                        form: {
+                            values: req.query
+                        },
+                        hasNext: currentPage < totalPages,
+                        hasPrevious: currentPage > 1,
+                        totalPages,
+                        currentPage
+                    });
+                })
+                .catch(err => next(err, 500))
         })
         .catch(err => next(err, 500))
 }
@@ -99,14 +143,14 @@ exports.postEditEmpresa = (req, res, next) => {
 
 exports.postNewEmpresa = (req, res, next) => {
     new Empresa({
-        ...req.body,
-        status: 'aprovado'
-    })
-    .save()
-    .then( empresa => {
-        res.redirect('/admin/empresas')
-    })
-    .catch( err => next(err, 500));
+            ...req.body,
+            status: 'aprovado'
+        })
+        .save()
+        .then(empresa => {
+            res.redirect('/admin/empresas')
+        })
+        .catch(err => next(err, 500));
 }
 
 exports.getAvaliacoes = (req, res, next) => {
@@ -171,36 +215,38 @@ exports.aprovarEmpresa = (req, res, next) => {
             empresa.password = empresa.id;
             empresa.status = 'aprovado';
             empresa.save()
-            .then( empresa => {
-                Solucao.find({ empresaId:empresa})
-                .then( solucoes => {
-                    return solucoes.forEach( solucao => {
-                        solucao.status = 'pendente';
-                        solucao.save();
-                    });
-                })
-                .then( resul => {
-                    transporter.sendMail({
-                        to: empresa.email,
-                        from: 'embrapasolucoes@gmail.com',
-                        subject: 'Sua empresa foi aprovada no Embrapa Soluções!',
-                        html: `
+                .then(empresa => {
+                    Solucao.find({
+                            empresaId: empresa
+                        })
+                        .then(solucoes => {
+                            return solucoes.forEach(solucao => {
+                                solucao.status = 'pendente';
+                                solucao.save();
+                            });
+                        })
+                        .then(resul => {
+                            transporter.sendMail({
+                                    to: empresa.email,
+                                    from: 'embrapasolucoes@gmail.com',
+                                    subject: 'Sua empresa foi aprovada no Embrapa Soluções!',
+                                    html: `
                             <h3> Oi ${empresa.encarregado}, estamos entrando em contato porque sua solicitação de cadastro foi aceita! </h3>
                             <h4> Segue os seu login para ter acesso ao sistema e cadastrar suas soluções: </h4>
                             <p> Usuário: ${empresa.usuario} </p>
                             <p> Senha: ${ empresa.password }</p>
-                            <h4> Agora basta acessar nosso site, clicar em tenho uma conta e fazer o login! Qualquer dúvida estamos a disposição :) </h4>
+                            <h4> Agora basta acessar <a href="http://embrapasolucoes.herokuapp.com/submeter">esta página</a>, clicar em "Já sou cadastrado" e fazer o login com estes dados! Qualquer dúvida estamos a disposição :) </h4>
                         `
-                    })
-                    .then( resul => {
+                                })
+                                .then(resul => {
 
-                        res.redirect('/admin/empresas/solicitacoes') 
-                    })
-                    .catch( err => next(err, 500))
+                                    res.redirect('/admin/empresas/solicitacoes')
+                                })
+                                .catch(err => next(err, 500))
+                        })
+                        .catch(err => nex(err, 500));
                 })
-                .catch( err => nex(err, 500));
-            })
-            .catch( err => next(err, 500))
+                .catch(err => next(err, 500))
         })
 
         .catch(err => next(err));
@@ -219,8 +265,8 @@ exports.rejeitarEmpresa = (req, res, next) => {
 
             empresa.status = 'rejeitado';
             empresa.save()
-            .then( empresa => res.redirect('/admin/empresas/solicitacoes') )
-            .catch( err => next(err, 500))
+                .then(empresa => res.redirect('/admin/empresas/solicitacoes'))
+                .catch(err => next(err, 500))
         })
 
         .catch(err => next(err));
@@ -237,9 +283,11 @@ exports.getByRegex = (req, res, next) => {
         })
         .select('nome id codigo')
         .then(empresas => {
-            return res.status(200).json({empresas});
+            return res.status(200).json({
+                empresas
+            });
         })
-        .catch(err =>{
+        .catch(err => {
             res.status(500).json(JSON.stringify([]));
             console.log(err)
         })
@@ -258,8 +306,8 @@ exports.pendenciarEmpresa = (req, res, next) => {
 
             empresa.status = 'pendente';
             empresa.save()
-            .then( empresa => res.redirect('/admin/empresas/solicitacoes') )
-            .catch( err => next(err, 500))
+                .then(empresa => res.redirect('/admin/empresas/solicitacoes'))
+                .catch(err => next(err, 500))
         })
 
         .catch(err => next(err));

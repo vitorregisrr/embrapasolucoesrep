@@ -1,0 +1,74 @@
+<%- include('../../includes/imports/head') %>
+
+</head>
+
+<body class="scrollbar-inner wow fadeIn">
+    <%- include('../../includes/components/mainheader') %>
+
+    <main>
+        <section id="banner" class="img-webp mb-3">
+            <div class="container">
+                <h1 class="title mb-3">
+                    <span class="wow fadeIn" data-wow-delay="0.3s">Painel de empresa</span>
+                    <span class="wow bounceInUp bold" data-wow-delay="0.7s">Solicitações de exibição</span>
+                </h1>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <%- include('../../includes/components/empresapanel') %>
+                </div>
+                <div class="col-lg-8">
+                    <div class="admin-wrap">
+                        <h3 class="inner-title text-left">Outras fotos da solução <%= solucao.nome %></h3>
+                        <p class="form-info text-left"><i class="fa fa-info-circle pr-2" area-hidden="true"></i>Agora
+                            que criou a solução, você pode adicionar outras imagens para ela!</p>
+                    </div>
+                    <form action="/empresa/solucoes/new" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <%- include('../../includes/form/errorBox') %>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="responsive-table">
+                                        <table class="flat-table">
+                                            <thead>
+                                                <tr>
+                                                    <td>Imagens</td>
+                                                    <td>Ações</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="imagesTable">
+                                                <% for(image of solucao.images) {%>
+                                                <tr>
+                                                    <td>
+                                                        <img src="<%= image.url %>"
+                                                            style="height: 100px; width: 100px; object-fit: cover">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" data-image="<%= image.public_id %>" class="btn btn-outline-danger" onclick="removeImage(this)"><i class="fa fa-times" aria-hidden="true"></i> Remover</button>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                            </tbody>
+                                        </table>
+                                        <div class="float-right">
+                                            <button type="button" class="btn-main" id="novaFoto" data-toggle="modal"
+                                                data-target="#novaFotoModal"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../../includes/modals/modal-novafoto') %>
+    <%- include('../../includes/components/footer') %>
+</body>
+
+<%- include('../../includes/imports/end') %>

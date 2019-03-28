@@ -1,0 +1,29 @@
+<aside id="adminPanel">
+    <div class="container">
+        <nav class="admin-nav">
+            <ul class="admin-nav__list">
+                <li class="admin-nav__list__item--title">Gerenciamento de Soluções</li>
+                <li class="admin-nav__list__item <%= path == 'empresa/solucoes' ? 'active' : ''%>"><a
+                        href="/empresa/solucoes"><i class="fa fa-desktop pr-1" aria-hidden="true"></i>Ver
+                        soluções</a></li>
+                <li class="admin-nav__list__item <%= path == 'empresa/solucoes/new' ? 'active' : ''%>"><a
+                        href="/empresa/solucoes/new"><i class="fa fa-plus pr-1" aria-hidden="true"></i>Nova
+                        solução</a></li>
+            </ul>
+
+            <ul class="admin-nav__list">
+                <li class="admin-nav__list__item--title">Gerenciamento de Avaliações</li>
+                <li class="admin-nav__list__item <%= path == 'empresa/avaliacoes' ? 'active' : ''%>"><a
+                        href="/empresa/avaliacoes"><i class="fa fa-comments pr-1" aria-hidden="true"></i>Ver
+                        avaliações</a></li>
+                <li class="admin-nav__list__item <%= path == 'empresa/avaliacoes/solicitacoes' ? 'active' : ''%>"><a
+                        href="/empresa/avaliacoes/solicitacoes"><i class="fa fa-list pr-1"
+                            aria-hidden="true"></i>Solicitações de Avaliação</a></li>
+            </ul>
+            <ul class="admin-nav__list">
+                <li class="admin-nav__list__item "><a href="/logout"><i class="fa fa-power-off pr-1"
+                            aria-hidden="true"></i>Desconectar</a></li>
+            </ul>
+        </nav>
+    </div>
+</aside>

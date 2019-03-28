@@ -67,11 +67,14 @@ Solucao.methods.updateRating = function() {
     .select('rating')
     .then( avaliacoes => {
         const ratings = avaliacoes.map( avaliacao => avaliacao.rating);
-        const average = ratings.reduce(function (sum, value) {
-            return sum + value;
-        }, 0) / ratings.length;
-       
-        this.rating = Math.round(average);
+        let average = 5;
+        if( ratings.length > 0 ){
+            average = ratings.reduce(function (sum, value) {
+                return sum + value;
+            }, 0) / ratings.length;
+            average =  Math.round(average);
+        }
+        this.rating = average;
         return this.save();
     
     })

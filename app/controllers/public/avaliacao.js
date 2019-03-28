@@ -54,7 +54,7 @@ exports.postAvaliacao = (req, res, next) => {
     } else {
         new Avaliacao({
                 ...req.body,
-                'status': pendente
+                status: 'pendente'
             })
             .save()
             .then(avaliacao => {
@@ -71,11 +71,8 @@ exports.postAvaliacao = (req, res, next) => {
                                     .render('public/solucao', {
                                         path: 'solucao',
                                         pageTitle: 'Emprapa Soluções - ' + req.body.titulo,
-                                        errorMessage: errors.array(),
-                                        form: {
-                                            values: req.body,
-                                            hasError: errors.array().map(i => i.param)
-                                        },
+                                        errorMessage: [],
+                                        form: false,
                                         robotsFollow: true,
                                         showAvaliacao: false,
                                         showSuccess: true,

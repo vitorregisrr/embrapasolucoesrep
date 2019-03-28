@@ -9,7 +9,7 @@
         <section id="banner" class="img-webp mb-3">
             <div class="container">
                 <h1 class="title mb-3">
-                    <span class="wow fadeIn" data-wow-delay="0.3s">Admnistrador</span>
+                    <span class="wow fadeIn" data-wow-delay="0.3s">Painel de empresa</span>
                     <span class="wow bounceInUp bold" data-wow-delay="0.7s">Solicitações de exibição</span>
                 </h1>
             </div>
@@ -18,7 +18,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-4">
-                    <%- include('../../includes/components/adminpanel') %>
+                    <%- include('../../includes/components/empresapanel') %>
                 </div>
                 <div class="col-lg-8">
                     <div class="row">
@@ -27,7 +27,7 @@
                                 <h3 class="inner-title text-left">Ver Soluções</h3>
                                 <p class="form-info text-left"><i class="fa fa-info-circle pr-2"
                                         area-hidden="true"></i>Veja
-                                    todas as soluções que já foram aprovadas e estão sendo exibidas no site.</p>
+                                    todas as soluções da sua empresa</p>
                             </div>
                         </div>
                         <div class="col-4 pt-4">
@@ -44,12 +44,6 @@
                                             <input type="text" name="nome" class="form-control"
                                                 placeholder="Nome da solução" maxLength="25"
                                                 value="<%= form ? form.values.nome : '' %>">
-                                        </div>
-                                        <div class="col-6">
-                                            <select type="text" name="empresaId"
-                                                class="form-control selectpicker-empresa" placeholder="Empresa">
-
-                                            </select>
                                         </div>
                                         <div class="col-6">
                                             <input type="number" name="codigo" class="form-control"
@@ -73,6 +67,19 @@
                                                     value="Website">Website</option>
                                             </select>
                                         </div>
+                                        <div class="col-md-6">
+                                            <select name="status" id="status" class="selectpicker" title="Status">
+                                                <option
+                                                    <%= form ? (form.values.status == 'aprovado' ? 'selected' : '') : '' %>
+                                                    value="aprovado">Aprovado</option>
+                                                <option
+                                                    <%= form ? (form.values.status == 'pendente' ? 'selected' : '') : '' %>
+                                                    value="pendente">Pendente</option>
+                                                <option
+                                                    <%= form ? (form.values.status == 'rejeitado' ? 'selected' : '') : '' %>
+                                                    value="rejeitado">Rejeitado</option>
+                                            </select>
+                                        </div>
                                         <div class="col-12">
                                             <button class="btn-main--square float-right mt-2">Filtrar</button>
                                         </div>
@@ -87,29 +94,28 @@
                             <table class="flat-table">
                                 <thead>
                                     <th>Nome</th>
-                                    <th>Empresa</th>
+                                    <th>Status</th>
                                     <th>Ações</th>
                                 </thead>
                                 <tbody>
                                     <% solucoes.forEach( solucao => { %>
                                     <tr>
-                                        <td> <a href="/admin/solucao/edit/<%= solucao.codigo %>"><%= solucao.nome %></a>
-                                        </td>
                                         <td> <a
-                                                href="<%= solucao.empresaId ? '/admin/empresa/:empresa.id' : '' %>"><%= solucao.empresaId ? solucao.empresaId.nome : 'Não especificada ou excluída' %></a>
+                                                href="/empresa/solucao/edit/<%= solucao.codigo %>"><%= solucao.nome %></a>
                                         </td>
+                                        <td class="text-capitalize"><%= solucao.status %></td>
                                         <td>
-                                            <a href="/admin/solucao/edit/<%= solucao.codigo %>" role="button"
+                                            <a href="/empresa/solucao/edit/<%= solucao.codigo %>" role="button"
                                                 class="acao" data-toggle="tooltip" data-placement="bottom"
                                                 title="Analisar">
                                                 <i class="fa fa-eye icon"></i></a>
-                                            <form data-confirm="true" action="/admin/solucao/pendenciar"
+                                            <form data-confirm="true" action="/empresa/solucao/delete"
                                                 class="d-inline-block" method="POST" data-confirm="true">
                                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                 <input type="hidden" name="id" value="<%= solucao.id %>">
                                                 <button type="submit" class="acao" data-toggle="tooltip"
-                                                    data-placement="bottom" title="Pendenciar"><i
-                                                        class="fa fa-ban icon warning"></i></button>
+                                                    data-placement="bottom" title="Deletar"><i
+                                                        class="fa fa-trash icon danger"></i></button>
                                             </form>
                                             </a>
                                         </td>

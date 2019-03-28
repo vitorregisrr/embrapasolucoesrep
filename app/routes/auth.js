@@ -11,11 +11,17 @@ const authCtrl = {
     login: require('../controllers/auth/login')
 }
 
-//LOGIN
+//LOGIN ADMIN
     //GET
     router.get('/admin/login', setLocals, authCtrl.login.getAdminlogin);
     //POST ADMIN
-    router.post('/admin/login', setLocals, validators.auth.login, authCtrl.login.postLoginAdmin);
+    router.post('/admin/login', setLocals, authCtrl.login.postLoginAdmin);
+
+//LOGIN EMPRESA
+    //EMPRESA
+    router.get('/empresa/login', setLocals, authCtrl.login.getEmpresaLogin);
+    //POST ADMIN
+    router.post('/empresa/login', setLocals, authCtrl.login.postLoginEmpresa);
 
 //LOGOUT
 router.get('/logout', setLocals, authCtrl.login.postLogout);

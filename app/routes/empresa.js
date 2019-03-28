@@ -8,21 +8,23 @@ const validators = {
 }
 
 const empresaCtrl = {
-    solucao: require('../controllers/admin/solucao'),
-    empresa: require('../controllers/admin/empresa'),
-    avaliacao: require('../controllers/admin/avaliacao')
+    solucao: require('../controllers/empresa/solucao'),
+    empresa: require('../controllers/empresa/empresa'),
+    avaliacao: require('../controllers/empresa/avaliacao')
 }
 
 //INDEX 
-router.get('/empresa', isAuth.empresa, setLocals, empresaCtrl.empresa.getSolucoes);
+router.get('/empresa', isAuth.empresa, setLocals, empresaCtrl.solucao.getSolucoes);
+router.get('/empresa/perfil', isAuth.empresa, setLocals, empresaCtrl.empresa.getPerfil);
 
 //SOLUCAO
-    router.get('/empresa/solucoes/minhassolucoes', isAuth.empresa, setLocals, empresaCtrl.empresa.getSolucoes);
-
+    router.get('/empresa/solucoes', isAuth.empresa, setLocals, empresaCtrl.solucao.getSolucoes);
     //GET NEW
-    router.get('/empresa/solucao/new', isAuth.empresa, setLocals, empresaCtrl.solucao.getNewSolucao);
+    router.get('/empresa/solucoes/new', isAuth.empresa, setLocals, empresaCtrl.solucao.getNewSolucao);
     //POST NEW
-    router.post('/empresa/solucao/new', isAuth.empresa, setLocals, validators.solucao.new, empresaCtrl.solucao.postNewSolucao);
+    router.post('/empresa/solucoes/new', isAuth.empresa, setLocals, validators.solucao.new, empresaCtrl.solucao.postNewSolucao);
+    //OUTRAS FOTOS
+    router.get('/empresa/solucao/outrasfotos/:id', isAuth.empresa, setLocals, empresaCtrl.solucao.getOutrasFotos);
     //GET EDIT
     router.get('/empresa/solucao/edit/:solucaoId', isAuth.empresa, setLocals, empresaCtrl.solucao.getEditSolucao);
     //POST EDIT
@@ -38,13 +40,15 @@ router.get('/empresa', isAuth.empresa, setLocals, empresaCtrl.empresa.getSolucoe
       
 
 //AVALIACOES
-    router.get('/empresa/avaliacoes', isAuth.empresa, setLocals, empresaCtrl.empresa.getAvaliacoes);
-    router.get('/empresa/avaliacoes/solicitacoes', isAuth.empresa, setLocals, empresaCtrl.empresa.getSolicitacoes);
+    router.get('/empresa/avaliacoes', isAuth.empresa, setLocals, empresaCtrl.avaliacao.getAvaliacoes);
+    router.get('/empresa/avaliacoes/solicitacoes', isAuth.empresa, setLocals, empresaCtrl.avaliacao.getSolicitacoes);
 
-    //DELETE 
-    router.post('/empresa/avaliacao/rejeitar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.aprovarAvaliacao);   
-    //ACCEPT 
-    router.post('/empresa/avaliacao/aprovar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.rejeitarAvaliacao);   
+     //APROVAR 
+     router.post('/empresa/avaliacao/aprovar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.aprovarAvaliacao);   
+     //REJEITAR 
+     router.post('/empresa/avaliacao/rejeitar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.rejeitarAvaliacao);
+     //PENDENCIAR 
+     router.post('/empresa/avaliacao/pendenciar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.pendenciarAvaliacao);   
 
 
 module.exports = router;

@@ -1,0 +1,161 @@
+<%- include('../../includes/imports/head') %>
+
+</head>
+
+<body class="scrollbar-inner wow fadeIn">
+    <%- include('../../includes/components/mainheader') %>
+
+    <main>
+        <section id="banner" class="img-webp mb-3">
+            <div class="container">
+                <h1 class="title mb-3">
+                    <span class="wow fadeIn" data-wow-delay="0.3s">Painel de empresa</span>
+                    <span class="wow bounceInUp bold" data-wow-delay="0.7s">Ver avaliações</span>
+                </h1>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <%- include('../../includes/components/empresapanel') %>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="admin-wrap">
+                                <h3 class="inner-title text-left">Ver Avaliações</h3>
+                                <p class="form-info text-left"><i class="fa fa-info-circle pr-2"
+                                        area-hidden="true"></i>Veja
+                                    todas as
+                                    solicitações de avaliação do sistema que que já foram aprovadas.</p>
+                            </div>
+                        </div>
+                        <div class="col-4 pt-4">
+                            <div class="btn-main float-right" data-toggle="collapse" href="#filtros" role="button"
+                                aria-expanded="false"> <i class="fa fa-filter"></i> </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 pt-2">
+                            <div class="collapse" id="filtros">
+                                <form action="">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" name="autor" class="form-control"
+                                                placeholder="Autor" maxLength="25"
+                                                value="<%= form ? form.values.autor : '' %>">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select type="text" name="empresaId"
+                                                class="form-control selectpicker-empresa" placeholder="Empresa">
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select type="text" name="solucaoId"
+                                                class="form-control selectpicker-solucao" placeholder="Solução">
+
+                                            </select>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn-main--square float-right mt-2">Filtrar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <% if( avaliacoes.length > 0) { %>
+                            <div class="responsive-table">
+                                <table class="flat-table">
+                                    <thead>
+                                        <th>Autor</th>
+                                        <th>Solução</th>
+                                        <th>Empresa</th>
+                                        <th>Ações</th>
+                                    </thead>
+                                    <tbody>
+                                        <% avaliacoes.forEach( avaliacao => { %>
+                                        <tr>
+                                            <td> <a href=""><%= avaliacao.autor %></a></td>
+                                            <td> <a
+                                                    href="/empresa/solucao/<%= avaliacao.solucaoId ? avaliacao.solucaoId.codigo : '' %>"><%= avaliacao.solucaoId ? avaliacao.solucaoId.nome : 'Não especificada ou apagada' %></a>
+                                            </td>
+                                            <td> <a
+                                                    href="<%= avaliacao.solucaoId.empresaId ? '/empresa/empresa/'+avaliacao.solucaoId.empresaId.id : '' %>"><%= avaliacao.solucaoId.empresaId ? avaliacao.solucaoId.empresaId.nome : 'Não especificada ou apagada' %></a>
+                                            </td>
+                                            <td>
+                                                <span data-placement="bottom" data-toggle="tooltip" title="Detalhes">
+                                                    <button type="button" class="acao" data-toggle="collapse"
+                                                        href="#detalhesAvaliacao<%= avaliacao.id %>" role="button"
+                                                        aria-expanded="false"
+                                                        aria-controls="detalhesAvaliacao<%= avaliacao.id %>">
+                                                        <i class="fa fa-eye icon"></i></button>
+                                                </span>
+                                                <form action="/empresa/avaliacao/pendenciar" class="d-inline"
+                                                    method="POST" data-confirm="true">
+                                                    <input type="hidden" name="id" value="<%= avaliacao.id %>">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <button type="submit" class="acao" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Pendenciar">
+                                                        <i class="fa fa-ban icon warning"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <td colspan="100%" class="collapse" id="detalhesAvaliacao<%= avaliacao.id %>">
+                                            <article class="avaliacao">
+                                                <div class="avaliacao__img">
+                                                    <img src="<%= avaliacao.image.url%>" alt="<%= avaliacao.autor %>">
+                                                </div>
+                                                <div class="avaliacao__content">
+                                                    <h5 class="avaliacao__title d-inline-block pr-2">
+                                                        <%= avaliacao.titulo%></h5>
+                                                    <div class="avaliacao__rating d-inline-block">
+                                                        <div class="d-inline-block">
+                                                            <select class="starsrating" readonly="true">
+                                                                <option
+                                                                    <%= avaliacao.rating == 1 || avaliacao.rating == 0 ? 'selected' : '' %>
+                                                                    value="1">1</option>
+                                                                <option <%= avaliacao.rating == 2 ? 'selected' : '' %>
+                                                                    value="2">2
+                                                                </option>
+                                                                <option <%= avaliacao.rating == 3 ? 'selected' : '' %>
+                                                                    value="3">3
+                                                                </option>
+                                                                <option <%= avaliacao.rating == 4 ? 'selected' : '' %>
+                                                                    value="4">4
+                                                                </option>
+                                                                <option <%= avaliacao.rating == 5 ? 'selected' : '' %>
+                                                                    value="5">5
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <p class="avaliacao__desc"><%= avaliacao.descricao %></p>
+                                                    <p class="avaliacao__author text-right"><%= avaliacao.autor %>,
+                                                        feito em <%= avaliacao.date.toLocaleDateString() %></p>
+                                                </div>
+                                            </article>
+                                        </td>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <% } else { %>
+                            <h3 class="inner-title">Nenhuma avaliação para exibir.</h3>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../../includes/modals/modal-confirmform')%>
+    <%- include('../../includes/components/footer')%>
+</body>
+
+<%- include('../../includes/imports/end') %>

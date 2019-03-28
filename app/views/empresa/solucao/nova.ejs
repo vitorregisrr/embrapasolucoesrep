@@ -1,0 +1,74 @@
+<%- include('../../includes/imports/head') %>
+
+</head>
+
+<body class="scrollbar-inner wow fadeIn">
+    <%- include('../../includes/components/mainheader') %>
+
+    <main>
+        <section id="banner" class="img-webp mb-3">
+            <div class="container">
+                <h1 class="title mb-3">
+                    <span class="wow fadeIn" data-wow-delay="0.3s">Painel de empresa</span>
+                    <span class="wow bounceInUp bold" data-wow-delay="0.7s">Solicitações de exibição</span>
+                </h1>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <%- include('../../includes/components/empresapanel') %>
+                </div>
+                <div class="col-lg-8">
+                    <div class="admin-wrap">
+                        <h3 class="inner-title text-left">Nova solução</h3>
+                        <p class="form-info text-left"><i class="fa fa-info-circle pr-2" area-hidden="true"></i>Crie
+                            uma solução como admnistrador. Você pode selecionar uma empresa já cadastrada ou deixar em branco.</p>
+                    </div>
+                    <form action="/empresa/solucoes/new" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <%- include('../../includes/form/errorBox') %>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="text" name="nome" class="form-control" placeholder="Nome da solução" value="<%= form ? form.values.nome : '' %>">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select type="text" class="form-control selectpicker" title="Categoria" placeholder="Empresa" name="categoria">
+                                                <option <%= form ? (form.values.categoria_solucao == 'Aplicativo' ? 'selected' : '') : '' %> value="Aplicativo">Aplicativo</option>
+                                                <option <%= form ? (form.values.categoria_solucao == 'Sistema' ? 'selected' : '') : '' %> value="Sistema">Sistema</option>
+                                                <option <%= form ? (form.values.categoria_solucao == 'Software' ? 'selected' : '') : '' %> value="Software">Software</option>
+                                                <option <%= form ? (form.values.categoria_solucao == 'Website' ? 'selected' : '') : '' %> value="Website">Website</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="link" class="form-control" placeholder="Link até a solução" value="<%= form ? form.values.link : '' %>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea name="descricao" rows="5" class="form-control" placeholder="Descrição da solução"><%= form ? form.values.descricao : '' %></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="media-upload">
+                                            <label for="image" class="btn-main--outline media-upload__label">Selecionar
+                                                imagem</label>
+                                            <input type="file" class="media-upload__input" name="image" id="image">
+                                            <p class="media-upload__text">Nenhuma imagem selecionada</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn-main--square w-100 mt-2">Criar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../../includes/components/footer')%>
+</body>
+
+<%- include('../../includes/imports/end') %>

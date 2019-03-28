@@ -6,29 +6,55 @@ const Solucao = require('../../models/solucao'),
     queryHelper = require('../../util/query-filter');
 
 exports.getSolucoes = (req, res, next) => {
+    const currentPage = req.query.page ? parseInt(req.query.page) : 1,
+        ITEMS_PER_PAGE = 8;
+    let totalItems;
+
     const query = queryHelper.solucao(req);
     query.status = 'aprovado';
     Solucao.find({
             ...query
         })
-        .populate('empresaId')
-        .sort({
-            date: -1
-        })
-        .then(solucoes => {
-            res.render('admin/solucao/solucoes', {
-                pageTitle: 'Soluções',
-                path: "admin/solucoes",
-                robotsFollow: false,
-                errorMessage: [],
-                solucoes,
-                form: { values : req.query }
-            });
+        .countDocuments()
+        .then(num => {
+            totalItems = num;
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+            Solucao.find({
+                    ...query
+                })
+                .populate('empresaId')
+                .skip((currentPage - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE)
+                .sort({
+                    date: -1
+                })
+                .then(solucoes => {
+                    res.render('admin/solucao/solucoes', {
+                        pageTitle: 'Soluções',
+                        path: "admin/solucoes",
+                        robotsFollow: false,
+                        errorMessage: [],
+                        solucoes,
+                        form: {
+                            values: req.query
+                        },
+                        hasNext: currentPage < totalPages,
+                        hasPrevious: currentPage > 1,
+                        totalPages,
+                        currentPage
+                    });
+                })
+                .catch(err => next(err, 500))
         })
         .catch(err => next(err, 500))
 }
 
 exports.getSolicitacoes = (req, res, next) => {
+    const currentPage = req.query.page ? parseInt(req.query.page) : 1,
+        ITEMS_PER_PAGE = 8;
+    let totalItems;
+
     const query = queryHelper.solucao(req);
     query.status = 'pendente';
     if (req.query.status == 'rejeitado') {
@@ -37,19 +63,37 @@ exports.getSolicitacoes = (req, res, next) => {
     Solucao.find({
             ...query
         })
-        .populate('empresaId')
-        .sort({
-            date: -1
-        })
-        .then(solucoes => {
-            res.render('admin/solucao/solicitacoes', {
-                pageTitle: 'Solicitações de solução',
-                path: "admin/solucoes",
-                robotsFollow: false,
-                errorMessage: [],
-                solucoes: solucoes.filter(solucao => solucao.empresaId ? solucao.empresaId.status != 'pendente' : true),
-                form: { values : req.query }
-            });
+        .countDocuments()
+        .then(num => {
+            totalItems = num;
+            const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+            Solucao.find({
+                    ...query
+                })
+                .skip((currentPage - 1) * ITEMS_PER_PAGE)
+                .limit(ITEMS_PER_PAGE)
+                .populate('empresaId')
+                .sort({
+                    date: -1
+                })
+                .then(solucoes => {
+                    res.render('admin/solucao/solicitacoes', {
+                        pageTitle: 'Solicitações de solução',
+                        path: "admin/solucoes",
+                        robotsFollow: false,
+                        errorMessage: [],
+                        solucoes: solucoes.filter(solucao => solucao.empresaId ? solucao.empresaId.status != 'pendente' : true),
+                        form: {
+                            values: req.query
+                        },
+                        hasNext: currentPage < totalPages,
+                        hasPrevious: currentPage > 1,
+                        totalPages,
+                        currentPage
+                    });
+                })
+                .catch(err => next(err, 500))
         })
         .catch(err => next(err, 500))
 }
@@ -60,10 +104,10 @@ exports.getEditSolucao = (req, res, next) => {
         })
         .populate('empresaId')
         .then(solucao => {
-            if(!solucao){
+            if (!solucao) {
                 return next(new Error('Solução não encontrada para editar.'), 500)
             }
-            
+
             res.render('admin/solucao/editar', {
                 pageTitle: 'Editar soluçao',
                 path: "admin/solucoes",
@@ -114,7 +158,7 @@ exports.postEditSolucao = (req, res, next) => {
                                 solucao.link = req.body.link;
                                 solucao.categoria = req.body.categoria;
 
-                                if (req.body.empresaId && req.body.empresaId != '' && !req.session.empresa) {
+                                if (req.body.empresaId && req.body.empresaId != '') {
                                     solucao.empresaId = req.body.empresaId;
                                 }
 
@@ -127,7 +171,7 @@ exports.postEditSolucao = (req, res, next) => {
             } else {
 
 
-                if (req.body.empresaId && req.body.empresaId != '' && !req.session.empresa) {
+                if (req.body.empresaId && req.body.empresaId != '') {
                     solucao.empresaId = req.body.empresaId;
                 }
 
@@ -153,6 +197,10 @@ exports.postNewSolucao = (req, res, next) => {
         ...req.body
     }
 
+    if( form.empresaId == ''){
+        delete form.empresaId;
+    }
+
     if (req.file) {
         fileHelper.compressImage(req.file, 700)
             .then(newPath => {
@@ -168,13 +216,7 @@ exports.postNewSolucao = (req, res, next) => {
                             .save()
 
                             .then(solucao => {
-                                if (req.session.empresa) {
-                                    return res.redirect('/empresa/solucao/outrasfotos/' + solucao.id);
-                                }
-
-                                if (req.session.admin) {
-                                    return res.redirect('/admin/solucao/outrasfotos/' + solucao.id);
-                                }
+                                return res.redirect('/admin/solucao/outrasfotos/' + solucao.id);
                             })
 
                             .catch(err => next(err));
@@ -190,13 +232,7 @@ exports.postNewSolucao = (req, res, next) => {
             .save()
 
             .then(solucao => {
-                if (req.session.empresa) {
-                    return res.redirect('/empresa/solucao/outrasfotos/' + solucao.id);
-                }
-
-                if (req.session.admin) {
                     return res.redirect('/admin/solucao/outrasfotos/' + solucao.id);
-                }
             })
 
             .catch(err => next(err));
@@ -304,8 +340,8 @@ exports.aprovarSolucao = (req, res, next) => {
 
             solucao.status = 'aprovado';
             solucao.save()
-            .then( resul => res.redirect('/admin/solucoes/solicitacoes'))
-            .catch( err => next(err, 500))
+                .then(resul => res.redirect('/admin/solucoes/solicitacoes'))
+                .catch(err => next(err, 500))
         })
 
         .catch(err => next(err));
@@ -324,8 +360,8 @@ exports.rejeitarSolucao = (req, res, next) => {
 
             solucao.status = 'rejeitado';
             solucao.save()
-            .then( solucao => res.redirect('/admin/solucoes/solicitacoes') )
-            .catch( err => next(err, 500))
+                .then(solucao => res.redirect('/admin/solucoes/solicitacoes'))
+                .catch(err => next(err, 500))
         })
 
         .catch(err => next(err));
@@ -343,30 +379,32 @@ exports.pendenciarSolucao = (req, res, next) => {
 
             solucao.status = 'pendente';
             solucao.save()
-            .then( solucao => res.redirect('/admin/solucoes/solicitacoes') )
-            .catch( err => next(err, 500))
+                .then(solucao => res.redirect('/admin/solucoes/solicitacoes'))
+                .catch(err => next(err, 500))
         })
 
         .catch(err => next(err));
 }
 
 exports.getOutrasFotos = (req, res, next) => {
-    Solucao.findOne({ _id: req.params.id })
-    .then( solucao => {
-        if(!solucao){
-            return res.redirect('/admin/solucoes')
-        }
+    Solucao.findOne({
+            _id: req.params.id
+        })
+        .then(solucao => {
+            if (!solucao) {
+                return res.redirect('/admin/solucoes')
+            }
 
-        res.render('admin/solucao/outrasfotos', {
-            pageTitle: 'Outras fotos da solução',
-            path: "admin/solucoes",
-            robotsFollow: false,
-            errorMessage: [],
-            form: false,
-            solucao
-        });
-    })
-    .catch( err => next(err, 500));
+            res.render('admin/solucao/outrasfotos', {
+                pageTitle: 'Outras fotos da solução',
+                path: "admin/solucoes",
+                robotsFollow: false,
+                errorMessage: [],
+                form: false,
+                solucao
+            });
+        })
+        .catch(err => next(err, 500));
 }
 
 
@@ -409,9 +447,11 @@ exports.getByRegex = (req, res, next) => {
         })
         .select('nome id codigo')
         .then(solucoes => {
-            return res.status(200).json({solucoes});
+            return res.status(200).json({
+                solucoes
+            });
         })
-        .catch(err =>{
+        .catch(err => {
             res.status(500).json(JSON.stringify([]));
             console.log(err)
         })

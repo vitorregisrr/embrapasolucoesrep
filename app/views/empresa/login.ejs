@@ -19,7 +19,7 @@
                 <div id="collapseGroup">
                     <div class="">
                         <%- include('../includes/form/errorBox') %>
-                        <form action="/admin/login"  method="POST">
+                        <form action="/empresa/login"  method="POST">
                         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                             <div class="row pt-4">
                                 <div class="offset-md-2"></div>
@@ -27,7 +27,7 @@
                                     <div class="row">
                                         <div class="col-12 text-left">
                                             <h3 class="form-title font-weight-bold color-main">Formulário de login</h3>
-                                            <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Faça login como admnistrador do sistema para gerenciar tudo.</p>
+                                            <p class="form-info"><i class="fa fa-info-circle pr-1"></i>Já foi aprovado no sistema? Faça o login como empresa para gerenciar suas soluções e avaliações.</p>
                                         </div>
                                         <div class="col-md-5">
                                             <input name="usuario" type="text" class="form-control" placeholder="Usuário">

@@ -55,9 +55,9 @@ exports.login = [
         body('password', 'Senha inválida, por favor insira uma senha.')
         .isLength({
             min: 8,
-            max: 20
+            max: 30
         })
-        .withMessage('A senha deve ter entre 8 e 20 caracteres.')
+        .withMessage('A senha deve ter entre 8 e 30 caracteres.')
         .trim(),
     ],
 

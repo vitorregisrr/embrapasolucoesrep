@@ -1,0 +1,167 @@
+<%- include('../../includes/imports/head') %>
+
+</head>
+
+<body class="scrollbar-inner wow fadeIn">
+    <%- include('../../includes/components/mainheader') %>
+
+    <main>
+        <section id="banner" class="img-webp mb-3">
+            <div class="container">
+                <h1 class="title mb-3">
+                    <span class="wow fadeIn" data-wow-delay="0.3s">Painel de empresa</span>
+                    <span class="wow bounceInUp bold" data-wow-delay="0.7s">Solicitações de exibição</span>
+                </h1>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <%- include('../../includes/components/empresapanel') %>
+                </div>
+                <div class="col-lg-8">
+                    <%  if(solucao.status == 'pendente') { %>
+                    <div class="alert alert-warning mt-2 d-flex justify-content-between" role="alert">
+                        <p>Esta solução está pendente. Você precisa tomar uma ação:</p>
+                        <div class="">
+                            <form action="/empresa/solucao/aprovar" class="d-inline-block" method="POST"
+                                data-confirm="true">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="id" value="<%= solucao.id %>">
+                                <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
+                                    title="Aceitar"><i class="fa fa-check icon success"></i></button>
+                            </form>
+                            <form action="/empresa/solucao/rejeitar" class="d-inline-block" method="POST"
+                                data-confirm="true">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="id" value="<%= solucao.id %>">
+                                <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
+                                    title="Rejeitar"><i class="fa fa-ban icon danger"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+                    <%  if(solucao.status == 'rejeitado') { %>
+                    <div class="alert alert-warning mt-2 d-flex justify-content-between" role="alert">
+                        <p>Esta solução foi rejeitada. Você clique no botão ao lado para aprova-la.</p>
+                        <div class="">
+                            <form action="/empresa/solucao/aprovar" data-confirm="true" class="d-inline-block"
+                                method="POST" data-confirm="true">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="id" value="<%= solucao.id %>">
+                                <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
+                                    title="Aceitar"><i class="fa fa-check icon success"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+                    <div class="admin-wrap">
+                        <h3 class="inner-title text-left">Editar solução</h3>
+                        <p class="form-info text-left"><i class="fa fa-info-circle pr-2" area-hidden="true"></i>Crie
+                            uma solução como admnistrador. Você pode selecionar uma empresa já cadastrada ou um nome
+                            fictício.</p>
+                    </div>
+                    <form action="/empresa/solucao/edit" enctype="multipart/form-data" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="id" value="<%= solucao.id %>">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <select type="text" name="empresaId" class="form-control selectpicker-empresa"
+                                            placeholder="Empresa">
+                                            <option selected value="<%= solucao.empresaId.id %>">
+                                                <%= solucao.empresaId.nome %></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="text" name="nome" class="form-control"
+                                            placeholder="Nome da solução" value="<%= solucao ? solucao.nome : '' %>">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select type="text" class="form-control selectpicker" title="Categoria"
+                                            placeholder="Empresa" name="categoria">
+                                            <option
+                                                <%= solucao ? (solucao.categoria == 'Aplicativo' ? 'selected' : '') : '' %>
+                                                value="Aplicativo">Aplicativo</option>
+                                            <option
+                                                <%= solucao ? (solucao.categoria == 'Sistema' ? 'selected' : '') : '' %>
+                                                value="Sistema">Sistema</option>
+                                            <option
+                                                <%= solucao ? (solucao.categoria == 'Software' ? 'selected' : '') : '' %>
+                                                value="Software">Software</option>
+                                            <option
+                                                <%= solucao ? (solucao.categoria == 'Website' ? 'selected' : '') : '' %>
+                                                value="Website">Website</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="link" class="form-control"
+                                            placeholder="Link até a solução" value="<%= solucao ? solucao.link : '' %>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea name="descricao" rows="5" class="form-control"
+                                            placeholder="Descrição da solução"><%= solucao ? solucao.descricao : '' %></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="media-upload">
+                                            <label for="image" class="btn-main--outline media-upload__label">Selecionar
+                                                imagem</label>
+                                            <input type="file" class="media-upload__input" name="image" id="image">
+                                            <p class="media-upload__text">Nenhuma imagem selecionada</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-control h-auto">
+                                            <div class="responsive-table">
+                                                <table class="flat-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Imagens</td>
+                                                            <td>Ações</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="imagesTable">
+                                                        <% for(image of solucao.images) {%>
+                                                        <tr>
+                                                            <td>
+                                                                <img src="<%= image.url %>"
+                                                                    style="height: 100px; width: 100px; object-fit: cover">
+                                                            </td>
+                                                            <td>
+                                                                <button type="button"
+                                                                    data-image="<%= image.public_id %>"
+                                                                    class="btn btn-outline-danger"
+                                                                    onclick="removeImage(this)"><i class="fa fa-times"
+                                                                        aria-hidden="true"></i> Remover</button>
+                                                            </td>
+                                                        </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
+                                                <div class="float-right">
+                                                    <button type="button" class="btn-main" id="novaFoto"
+                                                        data-toggle="modal" data-target="#novaFotoModal"><i
+                                                            class="fa fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn-main--square w-100 mt-2">Editar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../../includes/modals/modal-novafoto')%>
+    <%- include('../../includes/modals/modal-confirmform')%>
+    <%- include('../../includes/components/footer')%>
+</body>
+
+<%- include('../../includes/imports/end') %>

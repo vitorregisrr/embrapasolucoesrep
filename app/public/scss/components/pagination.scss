@@ -1,25 +1,25 @@
-.pagination__area {
-    
-}
-
 .pagination__list {
 
 
     &__item {
-        display: inline-block;
-        padding: 10px 15px;
-        border-radius: 3px;
-        background-color: $main-color;
         color: #fff;
         text-align: center;
-        margin: 0 1px;
+        display: inline-block;
+        
+        a{
+            padding: 10px 15px;
+            border-radius: 3px;
+            background-color: $main-color;
+            margin: 0 1px;
+            cursor: pointer;
+        }
 
         &:hover{
             color: #fff !important;
         }
 
-        &.active {
-            background-color: $main-black;
+        &.active a{
+            background-color: darken( $main-color, 20);
         }
     }
 

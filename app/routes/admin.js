@@ -41,10 +41,10 @@ router.get('/admin', isAuth.admin, setLocals, adminCtrl.empresa.getSolicitacoes)
     router.post('/admin/solucao/pendenciar', isAuth.admin, setLocals, adminCtrl.solucao.pendenciarSolucao);  
     //API
         //NOVA FOTO  PARA SOLUCAO
-        router.post('/api/solucao/novafoto', isAuth.admin, adminCtrl.solucao.setSolucaoImage);
+        router.post('/api/solucao/novafoto', isAuth.both, adminCtrl.solucao.setSolucaoImage);
 
         //REMOVER FOTO DO SOLUCAO
-        router.post('/api/solucao/removerfoto', isAuth.admin, adminCtrl.solucao.removeSolucaoImage);
+        router.post('/api/solucao/removerfoto', isAuth.both, adminCtrl.solucao.removeSolucaoImage);
 
         //API GET BY REGEX
         router.get('/api/solucao/searchbyajax', isAuth.admin, adminCtrl.solucao.getByRegex)

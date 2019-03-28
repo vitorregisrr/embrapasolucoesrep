@@ -11,8 +11,10 @@
                     <span class="wow fadeIn" data-wow-delay="0.3s">Encontre as melhores</span>
                     <span class="wow bounceInUp bold" data-wow-delay="0.7s">Soluções pecuárias</span>
                 </h1>
-                <form class="wow fadeInUp d-flex justify-content-center search-wrap" data-wow-delay="1.3s">
-                    <input class="search-bar" placeholder="Pesquisar solução por palavra chave" />
+                <form action="/" method="GET" class="wow fadeInUp d-flex justify-content-center search-wrap"
+                    data-wow-delay="1.3s">
+                    <input value="<%= form ? form.values.search : '' %>" class="search-bar" name="search"
+                        placeholder="Pesquisar solução por palavra chave" />
                     <button type="submit" class="search-send"> <i class="fa fa-search"></i>
                     </button>
                 </form>
@@ -38,6 +40,7 @@
                 </div>
             </form> -->
                 <div class="row">
+                    <% if( solucoes.length > 0 ) { %>
                     <% solucoes.forEach( solucao => { %>
                     <div class="col-12 col-md-6 col-lg-4">
                         <article class="solucao wow fadeInUp">
@@ -76,6 +79,14 @@
                         </article>
                     </div>
                     <% })%>
+                    <% } else { %>
+                    <h3 class="inner-title"><i class="fa fa-frown"></i></h3>
+                    <h3 class="inner-title">Nenhuma solução encontrada!</h3>
+                    <% } %>
+
+                </div>
+                <div class="row p-3">
+                    <%- include('../includes/components/pagination')%>
                 </div>
             </div>
         </section>
