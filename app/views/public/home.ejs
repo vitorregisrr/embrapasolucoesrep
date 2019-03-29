@@ -46,7 +46,8 @@
                         <article class="solucao wow fadeInUp">
                             <div class="solucao__img">
                                 <a href="/solucao/<%= solucao.codigo %>">
-                                    <img src="<%= solucao.mainImage.url %>" alt="<%= solucao.nome %>">
+                                    <img src="/images/loading.gif" data-src="<%= solucao.mainImage.url %>" class="lazy"
+                                        alt="<%= solucao.nome %>">
                                 </a>
                                 <div class="solucao__categoria"><%= solucao.categoria %></div>
                             </div>
@@ -80,8 +81,12 @@
                     </div>
                     <% })%>
                     <% } else { %>
-                    <h3 class="inner-title"><i class="fa fa-frown"></i></h3>
-                    <h3 class="inner-title">Nenhuma solução encontrada!</h3>
+                    <div class="container d-flex justify-content-center">
+                        <div class="not-found">
+                            <span class="smile">:(</span>
+                            <h3 class="text">Não encontramos nada, tente ser menos específico!</h3>
+                        </div>
+                    </div>
                     <% } %>
 
                 </div>

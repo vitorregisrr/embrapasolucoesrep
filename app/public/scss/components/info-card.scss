@@ -1,0 +1,28 @@
+.info-card {
+    background: #fff;
+    padding: 10px 15px;
+    width: 100%;
+    height: auto;
+    box-shadow: 1px 1px 21px rgba(0, 0, 0, 0.072);
+    border-radius: 6px;
+
+    .info-card__list{
+        text-decoration: none;
+        
+        .info-card__list__item{
+            color: rgb(53, 53, 53);
+            font-style: italic;
+            padding: 5px 0;
+
+            &:last-child{
+                padding-bottom: 0;
+            }
+            
+            span{
+                font-style: normal;
+                color: rgb(109, 109, 109);
+            }
+        }
+    }
+
+}

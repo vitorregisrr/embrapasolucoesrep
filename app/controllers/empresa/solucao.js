@@ -102,7 +102,8 @@ exports.getSolicitacoes = (req, res, next) => {
 
 exports.getEditSolucao = (req, res, next) => {
     Solucao.findOne({
-            codigo: req.params.codigo
+            codigo: req.params.codigo,
+            empresaId : req.empresa
         })
         .populate('empresaId')
         .then(solucao => {
@@ -134,7 +135,8 @@ exports.getNewSolucao = (req, res, next) => {
 
 exports.postEditSolucao = (req, res, next) => {
     Solucao.findOne({
-            _id: req.body.id
+            _id: req.body.id,
+            empresaId: req.empresa
         })
         .then(solucao => {
 
@@ -156,7 +158,6 @@ exports.postEditSolucao = (req, res, next) => {
                                 solucao.mainImage = image;
                                 solucao.nome = req.body.nome;
                                 solucao.descricao = req.body.descricao;
-                                solucao.empresaId = req.body.empresaId;
                                 solucao.link = req.body.link;
                                 solucao.categoria = req.body.categoria;
 
@@ -168,10 +169,8 @@ exports.postEditSolucao = (req, res, next) => {
                     .catch(err => next(err));
             } else {
 
-                solucao.mainImage = image;
                 solucao.nome = req.body.nome;
                 solucao.descricao = req.body.descricao;
-                solucao.empresaId = req.body.empresaId;
                 solucao.link = req.body.link;
                 solucao.categoria = req.body.categoria;
 

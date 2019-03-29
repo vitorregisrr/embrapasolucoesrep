@@ -113,6 +113,10 @@
                 padding: 10px 5px;
             }
 
+            &.shrink{
+                background-color: $main-color;
+            }
+            
             .navbar-nav {
                 li {
                     padding: 8px 0;

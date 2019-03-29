@@ -175,7 +175,6 @@ exports.postEditSolucao = (req, res, next) => {
                     solucao.empresaId = req.body.empresaId;
                 }
 
-                solucao.mainImage = image;
                 solucao.nome = req.body.nome;
                 solucao.descricao = req.body.descricao;
                 solucao.empresaId = req.body.empresaId;

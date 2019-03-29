@@ -42,9 +42,8 @@
                                 <form action="">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <input type="text" name="autor" class="form-control"
-                                                placeholder="Autor" maxLength="25"
-                                                value="<%= form ? form.values.autor : '' %>">
+                                            <input type="text" name="autor" class="form-control" placeholder="Autor"
+                                                maxLength="25" value="<%= form ? form.values.autor : '' %>">
                                         </div>
                                         <div class="col-md-4">
                                             <select type="text" name="empresaId"
@@ -146,7 +145,12 @@
                                 </table>
                             </div>
                             <% } else { %>
-                            <h3 class="inner-title">Nenhuma avaliação para exibir.</h3>
+                            <div class="container d-flex justify-content-center">
+                                <div class="not-found">
+                                    <span class="smile">:(</span>
+                                    <h3 class="text">Não encontramos nada, tente ser menos específico!</h3>
+                                </div>
+                            </div>
                             <% } %>
                         </div>
                     </div>

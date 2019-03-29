@@ -22,27 +22,41 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="admin-wrap">
-                        <h3 class="inner-title text-left">Nova empresa</h3>
-                        <p class="form-info text-left"><i class="fa fa-info-circle pr-2" area-hidden="true"></i>Crie
-                            empresas você mesmo como admnistrador, fornecendo alguns dados básicos. Ao final, será
-                            fornecido um código para a empresa se cadastrar escolhendo
-                            seu usuário e senha através do site.</p>
+                        <h3 class="inner-title text-left">Editar dados</h3>
                     </div>
-                    <form action="/empresa/editar">
+                    <form action="/empresa/editar" method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="id" value="<%= empresa.id %>">
                         <div class="row">
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-12">
-                                        <input type="text" class="form-control" placeholder="Nome da empresa">
+                                    <div class="col-6">
+                                        <input type="text" name="nome" class="form-control"
+                                            placeholder="Nome da empresa" value="<%= empresa.nome %>">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Email da empresa">
+                                        <input type="text" name="encarregado" class="form-control"
+                                            placeholder="Nome do encarregado" value="<%= empresa.encarregado %>">
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" placeholder="Nome do encarregado">
+                                        <input type="text" name="email" class="form-control"
+                                            placeholder="Email da empresa" value="<%= empresa.email %>">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="telefone" class="form-control"
+                                            placeholder="Telefone da empresa" value="<%= empresa.telefone %>">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="media-upload">
+                                            <p class="form-info ">Imagem da empresa</p>
+                                            <label for="image" class="btn-main--outline media-upload__label">Selecionar
+                                                imagem</label>
+                                            <input type="file" class="media-upload__input" name="image" id="image">
+                                            <p class="media-upload__text">Nenhuma imagem selecionada</p>
+                                        </div>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn-main--square w-100 mt-2">Criar</button>
+                                        <button class="btn-main--square w-100 mt-2">Editar</button>
                                     </div>
                                 </div>
                             </div>

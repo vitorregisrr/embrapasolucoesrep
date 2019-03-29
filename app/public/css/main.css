@@ -313,6 +313,8 @@ a {
       width: auto; }
     #main-header #main-nav .navbar-collapse {
       padding: 10px 5px; }
+    #main-header #main-nav.shrink {
+      background-color: #8fc152; }
     #main-header #main-nav .navbar-nav li {
       padding: 8px 0;
       -webkit-transition: all 0.2s ease-in-out;
@@ -407,6 +409,41 @@ a {
 .perfil-solucao .inner-title.name {
   font-size: 40px;
   color: #444444; }
+
+.not-found {
+  width: 400px;
+  height: auto;
+  border-radius: 10px;
+  color: #8fc152;
+  text-align: center;
+  padding: 20px 30px;
+  margin-top: 20px; }
+  .not-found .smile {
+    font-weight: 600;
+    font-size: 100px;
+    line-height: 120px; }
+  .not-found .text {
+    font-size: 20px;
+    font-weight: 500; }
+
+.info-card {
+  background: #fff;
+  padding: 10px 15px;
+  width: 100%;
+  height: auto;
+  box-shadow: 1px 1px 21px rgba(0, 0, 0, 0.072);
+  border-radius: 6px; }
+  .info-card .info-card__list {
+    text-decoration: none; }
+    .info-card .info-card__list .info-card__list__item {
+      color: #353535;
+      font-style: italic;
+      padding: 5px 0; }
+      .info-card .info-card__list .info-card__list__item:last-child {
+        padding-bottom: 0; }
+      .info-card .info-card__list .info-card__list__item span {
+        font-style: normal;
+        color: #6d6d6d; }
 
 .avaliacao {
   display: flex;
@@ -545,7 +582,9 @@ a {
 
 .form-title {
   font-weight: 500;
-  margin-top: 20px; }
+  margin-top: 20px;
+  font-size: 18px;
+  color: #5a5a5a; }
 
 .selectpicker-button {
   margin: 0 0 !important;

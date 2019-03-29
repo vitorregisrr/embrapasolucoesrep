@@ -54,14 +54,22 @@ exports.getEmpresa = (req, res, next) => {
             if (!empresa) {
                 res.redirect('/admin/empresas')
             }
-            res.render('admin/empresa/empresa', {
-                pageTitle: 'Empresa',
-                path: "admin/empresas",
-                robotsFollow: false,
-                errorMessage: [],
-                empresa,
-                form: false
-            });
+
+            Solucao.find({
+                    empresaId: empresa
+                })
+                .then(solucoes => {
+                    res.render('admin/empresa/empresa', {
+                        pageTitle: 'Empresa',
+                        path: "admin/empresas",
+                        robotsFollow: false,
+                        errorMessage: [],
+                        empresa,
+                        solucoes,
+                        form: false
+                    });
+                })
+                .catch(err => next(err, 500));
         })
         .catch(err => next(err, 500))
 }
@@ -112,13 +120,23 @@ exports.getSolicitacoes = (req, res, next) => {
 }
 
 exports.getEditEmpresa = (req, res, next) => {
-    res.render('admin/empresa/editar', {
-        pageTitle: 'Editar soluçao',
-        path: "admin/empresas",
-        robotsFollow: false,
-        errorMessage: [],
-        form: false
-    });
+    Empresa.findOne({
+            _id: req.params.id
+        })
+        .then(empresa => {
+            if (!empresa) {
+                next(new Error('Empresa não encontrada para editar'), 500)
+            }
+            res.render('admin/empresa/editar', {
+                pageTitle: 'Editar soluçao',
+                path: "admin/empresas",
+                robotsFollow: false,
+                errorMessage: [],
+                form: false,
+                empresa
+            });
+        })
+        .catch(err => next(err, 500))
 }
 
 exports.getNewEmpresa = (req, res, next) => {
@@ -132,13 +150,57 @@ exports.getNewEmpresa = (req, res, next) => {
 }
 
 exports.postEditEmpresa = (req, res, next) => {
-    res.render('admin/empresa/editar', {
-        pageTitle: 'Editar soluçao',
-        path: "admin/empresas",
-        robotsFollow: false,
-        errorMessage: [],
-        form: false
-    });
+    Empresa.findOne({
+            _id: req.body.id
+        })
+        .then(empresa => {
+
+            if (!empresa) {
+                return next(new Error('Houve um erro e a emoresa não foi encontrada, volte e tente novamente.'));
+            }
+
+            if (req.file) {
+                if (empresa.mainImage) {
+                    cloudinary.uploader.destroy(empresa.mainImage.public_id)
+                }
+
+                fileHelper.compressImage(req.file, 700)
+                    .then(newPath => {
+                        cloudinary.uploader.upload(newPath)
+                            .then(image => {
+                                fileHelper.delete(newPath);
+
+                                empresa.mainImage = image;
+                                empresa.nome = req.body.nome;
+                                empresa.encarregado = req.body.encarregado;
+                                empresa.email = req.body.email;
+                                empresa.telefone = req.body.telefone;
+
+                                empresa.save()
+                                    .then(empresa => {
+                                        return res.redirect('/admin/empresa/' + empresa._id)
+                                    })
+                                    .catch(err => next(err, 500))
+
+                            })
+                            .catch(err => next(err))
+                    })
+                    .catch(err => next(err));
+            } else {
+
+                empresa.nome = req.body.nome;
+                empresa.encarregado = req.body.encarregado;
+                empresa.email = req.body.email;
+                empresa.telefone = req.body.telefone;
+                
+                empresa.save()
+                    .then(empresa => {
+                        return res.redirect('/admin/empresa/' + empresa._id)
+                    })
+                    .catch(err => next(err, 500))
+            }
+        })
+        .catch(err => next(err));
 }
 
 exports.postNewEmpresa = (req, res, next) => {

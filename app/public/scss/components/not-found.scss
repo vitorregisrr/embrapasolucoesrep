@@ -1,0 +1,20 @@
+.not-found{
+    width: 400px;
+    height: auto;
+    border-radius: 10px;
+    color: $main-color;
+    text-align: center;
+    padding: 20px 30px;
+    margin-top: 20px;
+
+    .smile{
+        font-weight: 600;
+        font-size: 100px;
+        line-height: 120px;
+    }
+
+    .text{
+        font-size: 20px;
+        font-weight: 500;
+    }
+}

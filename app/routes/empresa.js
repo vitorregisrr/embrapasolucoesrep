@@ -15,7 +15,8 @@ const empresaCtrl = {
 
 //INDEX 
 router.get('/empresa', isAuth.empresa, setLocals, empresaCtrl.solucao.getSolucoes);
-router.get('/empresa/perfil', isAuth.empresa, setLocals, empresaCtrl.empresa.getPerfil);
+router.get('/empresa/editar', isAuth.empresa, setLocals, empresaCtrl.empresa.getEdit);
+router.post('/empresa/editar', isAuth.empresa, setLocals, empresaCtrl.empresa.postEdit);
 
 //SOLUCAO
     router.get('/empresa/solucoes', isAuth.empresa, setLocals, empresaCtrl.solucao.getSolucoes);
@@ -26,7 +27,7 @@ router.get('/empresa/perfil', isAuth.empresa, setLocals, empresaCtrl.empresa.get
     //OUTRAS FOTOS
     router.get('/empresa/solucao/outrasfotos/:id', isAuth.empresa, setLocals, empresaCtrl.solucao.getOutrasFotos);
     //GET EDIT
-    router.get('/empresa/solucao/edit/:solucaoId', isAuth.empresa, setLocals, empresaCtrl.solucao.getEditSolucao);
+    router.get('/empresa/solucao/edit/:codigo', isAuth.empresa, setLocals, empresaCtrl.solucao.getEditSolucao);
     //POST EDIT
     router.post('/empresa/solucao/edit', isAuth.empresa, setLocals, validators.solucao.edit, empresaCtrl.solucao.postEditSolucao);
     //DELETE 

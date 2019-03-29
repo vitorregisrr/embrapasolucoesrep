@@ -22,42 +22,134 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="admin-wrap">
-                        <%  if(empresa.status == 'pendente') { %>
-                        <div class="alert alert-warning mt-2 d-flex justify-content-between" role="alert">
-                            <p>Esta empresa está pendente. Você precisa tomar uma ação:</p>
-                            <div class="">
-                                <form action="/admin/empresa/aprovar" class="d-inline-block" method="POST"
-                                    data-confirm="true">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <input type="hidden" name="id" value="<%= empresa.id %>">
-                                    <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
-                                        title="Aceitar"><i class="fa fa-check icon success"></i></button>
-                                </form>
-                                <form action="/admin/empresa/rejeitar" class="d-inline-block" method="POST"
-                                    data-confirm="true">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <input type="hidden" name="id" value="<%= empresa.id %>">
-                                    <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
-                                        title="Rejeitar"><i class="fa fa-ban icon danger"></i></button>
-                                </form>
+                        <div class="row">
+                            <%  if(empresa.status == 'pendente') { %>
+                            <div class="alert alert-warning mt-2 d-flex justify-content-between" role="alert">
+                                <p>Esta empresa está pendente. Você precisa tomar uma ação:</p>
+                                <div class="">
+                                    <form action="/admin/empresa/aprovar" class="d-inline-block" method="POST"
+                                        data-confirm="true">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" name="id" value="<%= empresa.id %>">
+                                        <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
+                                            title="Aceitar"><i class="fa fa-check icon success"></i></button>
+                                    </form>
+                                    <form action="/admin/empresa/rejeitar" class="d-inline-block" method="POST"
+                                        data-confirm="true">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" name="id" value="<%= empresa.id %>">
+                                        <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
+                                            title="Rejeitar"><i class="fa fa-ban icon danger"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                            <% } %>
+                            <%  if(empresa.status == 'rejeitado') { %>
+                            <div class="alert alert-warning mt-2 d-flex justify-content-between" role="alert">
+                                <p>Esta empresa foi rejeitada. Você clique no botão ao lado para aprova-la.</p>
+                                <div class="">
+                                    <form action="/admin/empresa/aprovar" data-confirm="true" class="d-inline-block"
+                                        method="POST" data-confirm="true">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" name="id" value="<%= empresa.id %>">
+                                        <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
+                                            title="Aceitar"><i class="fa fa-check icon success"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
+
+                        <div class="row  mb-3">
+                            <div class="col-9">
+                                <h3 class="inner-title text-left text-uppercase"><span
+                                        class="color-black font-weight-normal">Empresa:
+                                    </span><%= empresa.nome %></h3>
+                            </div>
+                            <div class="col-3">
+                                <a role="button" href="/admin/empresa/edit/<%= empresa.id %>" class="btn-main"><i class="fa fa-edit"></i></a>
                             </div>
                         </div>
-                        <% } %>
-                        <%  if(empresa.status == 'rejeitado') { %>
-                        <div class="alert alert-warning mt-2 d-flex justify-content-between" role="alert">
-                            <p>Esta empresa foi rejeitada. Você clique no botão ao lado para aprova-la.</p>
-                            <div class="">
-                                <form action="/admin/empresa/aprovar" data-confirm="true" class="d-inline-block" method="POST"
-                                    data-confirm="true">
-                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                    <input type="hidden" name="id" value="<%= empresa.id %>">
-                                    <button type="submit" class="acao" data-toggle="tooltip" data-placement="bottom"
-                                        title="Aceitar"><i class="fa fa-check icon success"></i></button>
-                                </form>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <img src="<%= empresa.image ? empresa.image.url : '/images/thumbs/empresa' %>"
+                                    class="w-100" alt="<%= empresa.nome %>" style="height: 200px; object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <div class="info-card">
+                                    <ul class="info-card__list">
+                                        <li class="info-card__list__item">Empresa : <span><%= empresa.nome %></span>
+                                        </li>
+                                        <li class="info-card__list__item">Encarregado :
+                                            <span><%= empresa.encarregado %></span></li>
+                                        <li class="info-card__list__item">Telefone :
+                                            <span><%= empresa.telefone %></span></li>
+                                        <li class="info-card__list__item">E-mail : <span><%= empresa.email %></span>
+                                        </li>
+                                        <li class="info-card__list__item">Data de cadastro :
+                                            <span><%= empresa.date.toLocaleString() %></span></li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                        <% } %>
-                        <h3 class="inner-title text-left"><%= empresa.nome %></h3>
+                        <div class="row">
+                            <div class="col-12 pt-4">
+                                <h3 class="form-title color-main">Soluções da empresa</h3>
+                                <% if( solucoes.length > 0 ) {%>
+                                <table class="flat-table">
+                                    <thead>
+                                        <th>Nome</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </thead>
+                                    <tbody>
+                                        <% solucoes.forEach( solucao => { %>
+                                        <tr>
+                                            <td> <a
+                                                    href="/admin/solucao/edit/<%= solucao.codigo %>"><%= solucao.nome %></a>
+                                            </td>
+                                            <td class="text-capitalize"> <%= solucao.status %></td>
+                                            <td>
+                                                <a href="/admin/solucao/edit/<%= solucao.codigo %>" role="button"
+                                                    class="acao" data-toggle="tooltip" data-placement="bottom"
+                                                    title="Analisar">
+                                                    <i class="fa fa-eye icon"></i></a>
+                                                <% if( solucao.status == 'aprovado') {%>
+                                                <form data-confirm="true" action="/admin/solucao/pendenciar"
+                                                    class="d-inline-block" method="POST" data-confirm="true">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <input type="hidden" name="id" value="<%= solucao.id %>">
+                                                    <button type="submit" class="acao" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Pendenciar"><i
+                                                            class="fa fa-ban icon warning"></i></button>
+                                                </form>
+                                                <% } %>
+                                                <% if( solucao.status == 'pendente' || solucao.status == 'rejeitado') {%>
+                                                <form data-confirm="true" action="/admin/solucao/aprovar"
+                                                    class="d-inline-block" method="POST" data-confirm="true">
+                                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                                    <input type="hidden" name="id" value="<%= solucao.id %>">
+                                                    <button type="submit" class="acao" data-toggle="tooltip"
+                                                        data-placement="bottom" title="Aprovar"><i
+                                                            class="fa fa-check icon success"></i></button>
+                                                </form>
+                                                <% } %>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <% } else { %>
+                            <div class="container d-flex justify-content-center">
+                                <div class="not-found">
+                                    <span class="smile">:(</span>
+                                    <h3 class="text">Não encontramos nada, tente ser menos específico!</h3>
+                                </div>
+                            </div>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -116,8 +116,8 @@
                                                     </button>
                                                 </form>
                                                 <% if( avaliacao.status != 'rejeitado') { %>
-                                                <form action="/empresa/avaliacao/rejeitar" class="d-inline" method="POST"
-                                                    data-confirm="true">
+                                                <form action="/empresa/avaliacao/rejeitar" class="d-inline"
+                                                    method="POST" data-confirm="true">
                                                     <input type="hidden" name="id" value="<%= avaliacao.id %>">
                                                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                                     <button type="submit" class="acao" data-toggle="tooltip"
@@ -169,7 +169,12 @@
                                 </table>
                             </div>
                             <% } else { %>
-                            <h3 class="inner-title">Nenhuma avaliação encontrada.</h3>
+                            <div class="container d-flex justify-content-center">
+                                <div class="not-found">
+                                    <span class="smile">:(</span>
+                                    <h3 class="text">Não encontramos nada, tente ser menos específico!</h3>
+                                </div>
+                            </div>
                             <% } %>
                         </div>
                     </div>

@@ -94,6 +94,7 @@
                             <table class="flat-table">
                                 <thead>
                                     <th>Nome</th>
+                                    <th>Código</th>
                                     <th>Status</th>
                                     <th>Ações</th>
                                 </thead>
@@ -103,6 +104,7 @@
                                         <td> <a
                                                 href="/empresa/solucao/edit/<%= solucao.codigo %>"><%= solucao.nome %></a>
                                         </td>
+                                        <td><%= solucao.codigo %></td>
                                         <td class="text-capitalize"><%= solucao.status %></td>
                                         <td>
                                             <a href="/empresa/solucao/edit/<%= solucao.codigo %>" role="button"
@@ -125,7 +127,12 @@
                             </table>
                         </div>
                         <% } else { %>
-                        <h3 class="inner-title">Nenhuma solução encontrada.</h3>
+                        <div class="container d-flex justify-content-center">
+                            <div class="not-found">
+                                <span class="smile">:(</span>
+                                <h3 class="text">Não encontramos nada, tente ser menos específico!</h3>
+                            </div>
+                        </div>
                         <% } %>
                     </div>
                     <div class="row pt-5">
