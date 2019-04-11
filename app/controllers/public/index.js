@@ -7,6 +7,17 @@ exports.getIndex = (req, res, next) => {
         ITEMS_PER_PAGE = 8;
     let totalItems;
 
+    let listagem = 'thumb';
+    if( req.query.listagem ){
+        if( typeof req.query.listagem == 'object'){
+            listagem = req.query.listagem[req.query.listagem.length -1 ];
+
+        }else{
+            listagem = req.query.listagem;
+
+        }
+    }
+
     let query = {};
     if (req.query.search) {
         query = {
@@ -60,6 +71,8 @@ exports.getIndex = (req, res, next) => {
                     status: 'aprovado',
                     ...query
                 })
+                
+                .populate('empresaId')
                 .skip((currentPage - 1) * ITEMS_PER_PAGE)
                 .limit(ITEMS_PER_PAGE)
                 .sort({
@@ -79,6 +92,7 @@ exports.getIndex = (req, res, next) => {
                         hasPrevious: currentPage > 1,
                         totalPages,
                         currentPage,
+                        listagem
                     })
                 })
                 .catch(err => next(err, 500))

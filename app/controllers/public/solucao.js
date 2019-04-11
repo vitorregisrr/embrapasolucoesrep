@@ -6,6 +6,7 @@ exports.getSolucao = (req, res, next) => {
     Solucao.findOne({
             codigo: req.params.codigo
         })
+        .populate('empresaId')
         .then(solucao => {
             if (!solucao) {
                 res.redirect('/')

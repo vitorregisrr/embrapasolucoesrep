@@ -39,60 +39,112 @@
                     </div>
                 </div>
             </form> -->
-                <div class="row">
-                    <% if( solucoes.length > 0 ) { %>
-                    <% solucoes.forEach( solucao => { %>
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <article class="solucao wow fadeInUp">
-                            <div class="solucao__img">
-                                <a href="/solucao/<%= solucao.codigo %>">
-                                    <img src="/images/loading.gif" data-src="<%= solucao.mainImage.url %>" class="lazy"
-                                        alt="<%= solucao.nome %>">
-                                </a>
-                                <div class="solucao__categoria"><%= solucao.categoria %></div>
-                            </div>
-
-                            <div class="solucao__text">
-                                <h3 class="solucao__text__title"><%= solucao.nome %></h3>
-                                <div class="solucao__text__desc">
-                                    <p><%= solucao.descricao %></p>
-                                </div>
-                                <div class="solucao__text__rating">
-                                    <select class="starsrating" readonly="true">
-                                        <option <%= solucao.rating == 1 || solucao.rating == 0 ? 'selected' : '' %>
-                                            value="1">1</option>
-                                        <option <%= solucao.rating == 2 ? 'selected' : '' %> value="2">2
-                                        </option>
-                                        <option <%= solucao.rating == 3 ? 'selected' : '' %> value="3">3
-                                        </option>
-                                        <option <%= solucao.rating == 4 ? 'selected' : '' %> value="4">4
-                                        </option>
-                                        <option <%= solucao.rating == 5 ? 'selected' : '' %> value="5">5
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="solucao__more">
-                                <a href="/solucao/<%= solucao.codigo %>" role="button" class="btn-main--outline">Ver
-                                    mais</a>
-                            </div>
-                        </article>
-                    </div>
-                    <% })%>
-                    <% } else { %>
-                    <div class="container d-flex justify-content-center">
-                        <div class="not-found">
-                            <span class="smile">:(</span>
-                            <h3 class="text">Não encontramos nada, tente ser menos específico!</h3>
+                <div class="container">
+                    <div class="row pt-3">
+                        <div class="col-12 d-flex justify-content-end">
+                            <a href="?listagem=thumb" role="button" class="btn-main--outline pl-2 p-2 mr-2 keep-params"><i class="fa fa-th-large"></i></a>
+                            <a href="?listagem=lista" role="button" class="btn-main--outline pl-2 p-2 keep-params"><i class="fa fa-list"></i></a>
                         </div>
                     </div>
-                    <% } %>
+                </div>
+                <div class="row">
+                    <% if (solucoes.length > 0 ) { %>
+                        <% if (listagem === 'thumb') { %>
+                        <% solucoes.forEach( solucao => { %>
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <article class="solucao wow fadeInUp">
+                                    <div class="solucao__img">
+                                        <a href="/solucao/<%= solucao.codigo %>">
+                                            <img src="/images/loading.gif" data-src="<%= solucao.mainImage.url %>" class="lazy"
+                                                alt="<%= solucao.nome %>">
+                                        </a>
+                                        <div class="solucao__categoria"><%= solucao.categoria %></div>
+                                    </div>
 
+                                    <div class="solucao__text">
+                                        <h3 class="solucao__text__title"><%= solucao.nome %></h3>
+                                        <div class="solucao__text__desc">
+                                            <p><%= solucao.descricao %></p>
+                                        </div>
+                                        <div class="solucao__text__rating">
+                                            <select class="starsrating" readonly="true">
+                                                <option <%= solucao.rating == 1 || solucao.rating == 0 ? 'selected' : '' %>
+                                                    value="1">1</option>
+                                                <option <%= solucao.rating == 2 ? 'selected' : '' %> value="2">2
+                                                </option>
+                                                <option <%= solucao.rating == 3 ? 'selected' : '' %> value="3">3
+                                                </option>
+                                                <option <%= solucao.rating == 4 ? 'selected' : '' %> value="4">4
+                                                </option>
+                                                <option <%= solucao.rating == 5 ? 'selected' : '' %> value="5">5
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="solucao__more">
+                                        <a href="/solucao/<%= solucao.codigo %>" role="button" class="btn-main--outline">Ver
+                                            mais</a>
+                                    </div>
+                                </article>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                            <div class="col-12">
+                                <div class="responsive-table">
+                                    <table class="flat-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nome</th>
+                                                <th>Categoria</th>
+                                                <th>Empresa</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% solucoes.forEach( solucao => { %>
+                                                <tr class="w-100">
+                                                    <td><%= solucao.nome %></td>
+                                                    <td><%= solucao.categoria %></td>
+                                                    <td><%= solucao.empresaId.nome %></td>
+                                                    <td>
+                                                        <select class="starsrating" readonly="true">
+                                                            <option <%= solucao.rating == 1 || solucao.rating == 0 ? 'selected' : '' %>
+                                                                value="1">1</option>
+                                                            <option <%= solucao.rating == 2 ? 'selected' : '' %> value="2">2
+                                                            </option>
+                                                            <option <%= solucao.rating == 3 ? 'selected' : '' %> value="3">3
+                                                            </option>
+                                                            <option <%= solucao.rating == 4 ? 'selected' : '' %> value="4">4
+                                                            </option>
+                                                            <option <%= solucao.rating == 5 ? 'selected' : '' %> value="5">5
+                                                            </option>
+                                                        </select> 
+                                                    </td>
+                                                    <td>        
+                                                        <a href="/solucao/<%= solucao.codigo %>" role="button" class="acao" data-toggle="tooltip"
+                                                            data-placement="bottom" title="Ver"><i class="fa fa-info icon"></i></a>
+                                                    </td>
+                                                </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                    <% } %>
+            <% } else { %>
+                <div class="container d-flex justify-content-center">
+                    <div class="not-found">
+                        <span class="smile">:(</span>
+                        <h3 class="text">Não encontramos nada, tente ser menos específico!</h3>
+                    </div>
                 </div>
-                <div class="row p-3">
-                    <%- include('../includes/components/pagination')%>
-                </div>
+            <% } %>
+
+            </div>
+            <div class="row p-3">
+                <%- include('../includes/components/pagination')%>
+            </div>
             </div>
         </section>
         <%- include('../includes/components/footer')%>
