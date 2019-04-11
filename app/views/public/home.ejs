@@ -106,7 +106,7 @@
                                                 <tr class="w-100">
                                                     <td><%= solucao.nome %></td>
                                                     <td><%= solucao.categoria %></td>
-                                                    <td><%= solucao.empresaId.nome %></td>
+                                                    <td><%= solucao.empresaId ? solucao.empresaId.nome : 'Não especificado' %></td>
                                                     <td>
                                                         <select class="starsrating" readonly="true">
                                                             <option <%= solucao.rating == 1 || solucao.rating == 0 ? 'selected' : '' %>
