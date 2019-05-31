@@ -55,7 +55,7 @@ exports.both = (req, res, next) => {
     } else {
         req.admin = null;
         req.empresa = null;
-        return res.redirect('/login');
+        return res.redirect('/empresa/login');
     }
 
 }

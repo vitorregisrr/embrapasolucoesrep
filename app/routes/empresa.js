@@ -9,8 +9,7 @@ const validators = {
 
 const empresaCtrl = {
     solucao: require('../controllers/empresa/solucao'),
-    empresa: require('../controllers/empresa/empresa'),
-    avaliacao: require('../controllers/empresa/avaliacao')
+    empresa: require('../controllers/empresa/empresa')
 }
 
 //INDEX 
@@ -39,17 +38,4 @@ router.post('/empresa/editar', isAuth.empresa, setLocals, empresaCtrl.empresa.po
         //REMOVER FOTO DO SOLUCAO
         router.post('/api/propiedade/removerfoto', isAuth.empresa, empresaCtrl.solucao.removeSolucaoImage);
       
-
-//AVALIACOES
-    router.get('/empresa/avaliacoes', isAuth.empresa, setLocals, empresaCtrl.avaliacao.getAvaliacoes);
-    router.get('/empresa/avaliacoes/solicitacoes', isAuth.empresa, setLocals, empresaCtrl.avaliacao.getSolicitacoes);
-
-     //APROVAR 
-     router.post('/empresa/avaliacao/aprovar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.aprovarAvaliacao);   
-     //REJEITAR 
-     router.post('/empresa/avaliacao/rejeitar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.rejeitarAvaliacao);
-     //PENDENCIAR 
-     router.post('/empresa/avaliacao/pendenciar', isAuth.empresa, setLocals, empresaCtrl.avaliacao.pendenciarAvaliacao);   
-
-
 module.exports = router;

@@ -13,7 +13,7 @@ exports.postAvaliacao = (req, res, next) => {
                         fileHelper.delete(newPath);
                         new Avaliacao({
                                 ...req.body,
-                                status: 'pendente',
+                                status: 'aprovado',
                                 image,
                             })
                             .save()
